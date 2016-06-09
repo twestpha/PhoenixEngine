@@ -1,4 +1,5 @@
-// #include "Engine.hpp"
+#include <thread>
+
 #include "WWindow.hpp"
 
 HINSTANCE hInstance;
@@ -6,7 +7,6 @@ HINSTANCE hPrevInstance;
 HDC hardwareDeviceContext;
 LPSTR lpCmdLine;
 int nCmdShow;
-
 bool winapi;
 
 int TMain(){
@@ -30,8 +30,12 @@ int TMain(){
         //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
         // }
 
-        WWindow w(hInstance, hPrevInstance, lpCmdLine, nCmdShow /* Pass reference to game to render...? */);
+        WWindow w(0, 0, 256, 256, "Test Window");
+    } else {
+        // Linux window implementation goes here :D
     }
+
+
 
     return 0;
 }

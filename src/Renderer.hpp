@@ -1,5 +1,3 @@
-#include <SFML/Graphics.hpp>
-
 #pragma once
 
 class Renderer {

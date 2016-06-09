@@ -2,13 +2,18 @@
 
 #pragma once
 
-const char g_szClassName[] = "defaultWindowClass";
-
 class WWindow {
 public:
-    WWindow(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+    WWindow();
+    WWindow(int x, int y, int width, int height, const char* title);
+
+    void Update();
+
+    static void Draw(HDC hardwareDeviceContext);
 private:
+    static bool registeredWindowClass;
     WNDCLASSEX windowClass;
     HWND windowHandle;
     MSG windowMessage;
+    HPALETTE hPalette;
 };
