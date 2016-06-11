@@ -5,23 +5,20 @@
 #include "WWindow.hpp"
 #include "Assert.hpp"
 
-// VOID OnPaint(HDC hdc);
-
 // Static Variables
+WWindow* WWindow::instancePointer;
 bool WWindow::registeredWindowClass;
 
 // External Variables
 // Special Case: Hardware Variables from Windows API
 extern HINSTANCE hInstance;
 extern HINSTANCE hPrevInstance;
-extern HDC hardwareDeviceContext;
 extern LPSTR lpCmdLine;
 extern int nCmdShow;
 
 // TEMP COPYPASTA
 void reshape(int width, int height)
 {
-    printf("Reshape being called...\n");
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -32,12 +29,11 @@ void reshape(int width, int height)
 }
 
 LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, WPARAM windowParameters, LPARAM lParameters){
-    HDC hardwareDeviceContext;
     PAINTSTRUCT paintStruct;
 
     switch(windowMessage){
     case WM_PAINT:
-    	WWindow::Draw(hardwareDeviceContext);
+    	WWindow::Instance()->Draw();
     	BeginPaint(windowHandle, &paintStruct);
     	EndPaint(windowHandle, &paintStruct);
     	return 0;
@@ -55,18 +51,19 @@ LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, W
     return DefWindowProc(windowHandle, windowMessage, windowParameters, lParameters);
 }
 
-WWindow::WWindow(){
-    WWindow(0, 0, 256, 256, "Default title");
+WWindow* WWindow::Instance(){
+    if(!instancePointer){
+        instancePointer = new  WWindow(0, 0, 512, 512, "Default title");
+    }
+    return instancePointer;
 }
-
 
 WWindow::WWindow(int x, int y, int width, int height, const char* title){
     int n;
     DWORD bufferingTypeFlags = PFD_DOUBLEBUFFER;
     BYTE  colorType  = PFD_TYPE_RGBA;
     int pixelFormat;
-    WNDCLASS    windowClass;
-    LOGPALETTE* lpPal;
+    LOGPALETTE* logPalette;
     PIXELFORMATDESCRIPTOR pixelFormatDescriptor;
 
     if(!WWindow::registeredWindowClass){
@@ -111,12 +108,12 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
             n = 256;
         }
 
-    	lpPal = (LOGPALETTE*)malloc(sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * n);
-    	memset(lpPal, 0, sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * n);
-    	lpPal->palVersion = 0x300;
-    	lpPal->palNumEntries = n;
+    	logPalette = (LOGPALETTE*)malloc(sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * n);
+    	memset(logPalette, 0, sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * n);
+    	logPalette->palVersion = 0x300;
+    	logPalette->palNumEntries = n;
 
-    	GetSystemPaletteEntries(hardwareDeviceContext, 0, n, &lpPal->palPalEntry[0]);
+    	GetSystemPaletteEntries(hardwareDeviceContext, 0, n, &logPalette->palPalEntry[0]);
 
     	/* if the pixel type is RGBA, then we want to make an RGB ramp,
     	   otherwise (color index) set individual colors. */
@@ -128,60 +125,69 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
 
     	    /* fill in the entries with an RGB color ramp. */
     	    for (i = 0; i < n; ++i) {
-    		lpPal->palPalEntry[i].peRed =
+    		logPalette->palPalEntry[i].peRed =
     		    (((i >> pixelFormatDescriptor.cRedShift)   & redMask)   * 255) / redMask;
-    		lpPal->palPalEntry[i].peGreen =
+    		logPalette->palPalEntry[i].peGreen =
     		    (((i >> pixelFormatDescriptor.cGreenShift) & greenMask) * 255) / greenMask;
-    		lpPal->palPalEntry[i].peBlue =
+    		logPalette->palPalEntry[i].peBlue =
     		    (((i >> pixelFormatDescriptor.cBlueShift)  & blueMask)  * 255) / blueMask;
-    		lpPal->palPalEntry[i].peFlags = 0;
+    		logPalette->palPalEntry[i].peFlags = 0;
     	    }
     	} else {
-    	    lpPal->palPalEntry[0].peRed = 0;
-    	    lpPal->palPalEntry[0].peGreen = 0;
-    	    lpPal->palPalEntry[0].peBlue = 0;
-    	    lpPal->palPalEntry[0].peFlags = PC_NOCOLLAPSE;
-    	    lpPal->palPalEntry[1].peRed = 255;
-    	    lpPal->palPalEntry[1].peGreen = 0;
-    	    lpPal->palPalEntry[1].peBlue = 0;
-    	    lpPal->palPalEntry[1].peFlags = PC_NOCOLLAPSE;
-    	    lpPal->palPalEntry[2].peRed = 0;
-    	    lpPal->palPalEntry[2].peGreen = 255;
-    	    lpPal->palPalEntry[2].peBlue = 0;
-    	    lpPal->palPalEntry[2].peFlags = PC_NOCOLLAPSE;
-    	    lpPal->palPalEntry[3].peRed = 0;
-    	    lpPal->palPalEntry[3].peGreen = 0;
-    	    lpPal->palPalEntry[3].peBlue = 255;
-    	    lpPal->palPalEntry[3].peFlags = PC_NOCOLLAPSE;
+    	    logPalette->palPalEntry[0].peRed = 0;
+    	    logPalette->palPalEntry[0].peGreen = 0;
+    	    logPalette->palPalEntry[0].peBlue = 0;
+    	    logPalette->palPalEntry[0].peFlags = PC_NOCOLLAPSE;
+    	    logPalette->palPalEntry[1].peRed = 255;
+    	    logPalette->palPalEntry[1].peGreen = 0;
+    	    logPalette->palPalEntry[1].peBlue = 0;
+    	    logPalette->palPalEntry[1].peFlags = PC_NOCOLLAPSE;
+    	    logPalette->palPalEntry[2].peRed = 0;
+    	    logPalette->palPalEntry[2].peGreen = 255;
+    	    logPalette->palPalEntry[2].peBlue = 0;
+    	    logPalette->palPalEntry[2].peFlags = PC_NOCOLLAPSE;
+    	    logPalette->palPalEntry[3].peRed = 0;
+    	    logPalette->palPalEntry[3].peGreen = 0;
+    	    logPalette->palPalEntry[3].peBlue = 255;
+    	    logPalette->palPalEntry[3].peFlags = PC_NOCOLLAPSE;
     	}
 
-    	hPalette = CreatePalette(lpPal);
+    	hPalette = CreatePalette(logPalette);
     	if(hPalette){
     	    SelectPalette(hardwareDeviceContext, hPalette, FALSE);
     	    RealizePalette(hardwareDeviceContext);
     	}
 
-    	free(lpPal);
+    	free(logPalette);
     }
 
     ReleaseDC(windowHandle, hardwareDeviceContext);
+    printf("Creating This: %p | HDC: %p | HDC&: %p\n", this, hardwareDeviceContext, &hardwareDeviceContext);
+
+}
+
+void WWindow::Start(){
+    hardwareGLRenderContext = wglCreateContext(hardwareDeviceContext);
+    wglMakeCurrent(hardwareDeviceContext, hardwareGLRenderContext);
+    printf("Starting This: %p | HDC: %p | HDC&: %p\n", this, hardwareDeviceContext, &hardwareDeviceContext);
+
 
     glEnable(GL_DEPTH_TEST);
 
     ShowWindow(windowHandle, nCmdShow);
-    UpdateWindow(windowHandle);
 
-    while(GetMessage(&windowMessage, NULL, 0, 0) > 0){
+    while(GetMessage(&windowMessage, windowHandle, 0, 0) > 0){
         TranslateMessage(&windowMessage);
         DispatchMessage(&windowMessage);
     }
 }
 
-void WWindow::Draw(HDC hardwareDeviceContext){
-    printf("Drawing\n");
+void WWindow::Draw(){
+    printf("Drawing This: %p | HDC: %p | HDC&: %p\n", this, hardwareDeviceContext, &hardwareDeviceContext);
+
     /* rotate a triangle around */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glPushMatrix();
+    glPushMatrix();
         // glTranslatef(trans[0], trans[1], trans[2]);
         // glRotatef(rot[0], 1.0f, 0.0f, 0.0f);
         // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);

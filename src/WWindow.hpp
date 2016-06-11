@@ -4,16 +4,21 @@
 
 class WWindow {
 public:
-    WWindow();
+    static WWindow* Instance();
+    static WWindow* instancePointer;
+
+    void Start();
+
+    void Draw();
+private:
     WWindow(int x, int y, int width, int height, const char* title);
 
-    void Update();
-
-    static void Draw(HDC hardwareDeviceContext);
-private:
     static bool registeredWindowClass;
-    WNDCLASSEX windowClass;
+
+    WNDCLASS windowClass;
+    HDC hardwareDeviceContext;
     HWND windowHandle;
+    HGLRC hardwareGLRenderContext;
     MSG windowMessage;
     HPALETTE hPalette;
 };

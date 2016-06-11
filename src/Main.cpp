@@ -4,7 +4,6 @@
 
 HINSTANCE hInstance;
 HINSTANCE hPrevInstance;
-HDC hardwareDeviceContext;
 LPSTR lpCmdLine;
 int nCmdShow;
 bool winapi;
@@ -30,7 +29,7 @@ int TMain(){
         //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
         // }
 
-        WWindow w(0, 0, 256, 256, "Test Window");
+        WWindow::Instance()->Start();
     } else {
         // Linux window implementation goes here :D
     }

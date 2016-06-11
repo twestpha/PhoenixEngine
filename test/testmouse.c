@@ -89,6 +89,8 @@ display()
     glEnd();
     glPopMatrix();
     glFlush();
+    printf("Using HDC: %p | HDC&: %p\n", hDC, &hDC);
+
     SwapBuffers(hDC);			/* nop if singlebuffered */
 }
 
@@ -347,6 +349,8 @@ WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst,
     hDC = GetDC(hWnd);
     hRC = wglCreateContext(hDC);
     wglMakeCurrent(hDC, hRC);
+    printf("Using HDC: %p | HDC&: %p\n", hDC, &hDC);
+
 
     init();
 
