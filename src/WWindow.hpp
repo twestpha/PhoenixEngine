@@ -4,10 +4,16 @@
 
 class WWindow {
 public:
+    static HINSTANCE hInstance;
+    static HINSTANCE hPrevInstance;
+    static LPSTR lpCmdLine;
+    static int nCmdShow;
+
     static WWindow* Instance();
     static WWindow* instancePointer;
 
     void Start();
+    void Resize(int newWidth, int newHeight);
 
     void Draw();
 private:
@@ -21,4 +27,7 @@ private:
     HGLRC hardwareGLRenderContext;
     MSG windowMessage;
     HPALETTE hPalette;
+
+    unsigned int frameCount;
+    double totalTime;
 };

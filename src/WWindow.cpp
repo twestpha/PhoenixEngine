@@ -1,33 +1,19 @@
-#include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 
 #include "WWindow.hpp"
 #include "Assert.hpp"
+#include "Time.hpp"
 
 // Static Variables
 WWindow* WWindow::instancePointer;
 bool WWindow::registeredWindowClass;
+HINSTANCE WWindow::hInstance;
+HINSTANCE WWindow::hPrevInstance;
+LPSTR WWindow::lpCmdLine;
+int WWindow::nCmdShow;
 
-// External Variables
-// Special Case: Hardware Variables from Windows API
-extern HINSTANCE hInstance;
-extern HINSTANCE hPrevInstance;
-extern LPSTR lpCmdLine;
-extern int nCmdShow;
-
-// TEMP COPYPASTA
-void reshape(int width, int height)
-{
-    glViewport(0, 0, width, height);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(60.0, (float)width/height, 0.001, 100.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -3.0f);
-}
-
+// Special stupid callback function that window bitches about
 LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, WPARAM windowParameters, LPARAM lParameters){
     PAINTSTRUCT paintStruct;
 
@@ -36,6 +22,7 @@ LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, W
     	WWindow::Instance()->Draw();
     	BeginPaint(windowHandle, &paintStruct);
     	EndPaint(windowHandle, &paintStruct);
+        InvalidateRect(windowHandle, NULL, false);
     	return 0;
     case WM_CLOSE:
         DestroyWindow(windowHandle);
@@ -44,7 +31,8 @@ LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, W
         PostQuitMessage(0);
         return 0;
     case WM_SIZE:
-    	reshape(LOWORD(lParameters), HIWORD(lParameters));
+    	WWindow::Instance()->Resize(LOWORD(lParameters), HIWORD(lParameters));
+        PostMessage(windowHandle, WM_PAINT, 0, 0);
     	return 0;
     }
 
@@ -162,34 +150,43 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
     }
 
     ReleaseDC(windowHandle, hardwareDeviceContext);
-    printf("Creating This: %p | HDC: %p | HDC&: %p\n", this, hardwareDeviceContext, &hardwareDeviceContext);
-
 }
 
 void WWindow::Start(){
-    hardwareGLRenderContext = wglCreateContext(hardwareDeviceContext);
-    wglMakeCurrent(hardwareDeviceContext, hardwareGLRenderContext);
-    printf("Starting This: %p | HDC: %p | HDC&: %p\n", this, hardwareDeviceContext, &hardwareDeviceContext);
+    if(windowHandle){
+        hardwareGLRenderContext = wglCreateContext(hardwareDeviceContext);
+        wglMakeCurrent(hardwareDeviceContext, hardwareGLRenderContext);
 
+        glEnable(GL_DEPTH_TEST);
 
-    glEnable(GL_DEPTH_TEST);
+        ShowWindow(windowHandle, nCmdShow);
+        while(GetMessage(&windowMessage, windowHandle, 0, 0) > 0){
+            TranslateMessage(&windowMessage);
+            DispatchMessage(&windowMessage);
+        }
 
-    ShowWindow(windowHandle, nCmdShow);
-
-    while(GetMessage(&windowMessage, windowHandle, 0, 0) > 0){
-        TranslateMessage(&windowMessage);
-        DispatchMessage(&windowMessage);
+        printf("Average draw time: %fms (%f FPS)\n", totalTime/float(frameCount), float(frameCount)/totalTime);
     }
 }
 
-void WWindow::Draw(){
-    printf("Drawing This: %p | HDC: %p | HDC&: %p\n", this, hardwareDeviceContext, &hardwareDeviceContext);
+void WWindow::Resize(int newWidth, int newHeight){
+    glViewport(0, 0, newWidth, newHeight);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60.0, (float)newWidth/newHeight, 0.001, 100.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslatef(0.0f, 0.0f, -3.0f);
+}
 
+void WWindow::Draw(){
+    double drawTime = Time::CurrentTime();
     /* rotate a triangle around */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glPushMatrix();
         // glTranslatef(trans[0], trans[1], trans[2]);
-        // glRotatef(rot[0], 1.0f, 0.0f, 0.0f);
+        glRotatef(float(frameCount) * 2, 0.0f, 1.0f, 0.0f);
         // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);
         glBegin(GL_TRIANGLES);
             #define TOP glIndexi(1); glColor3f(1.0f, 0.0f, 0.0f); glVertex3i(0, 1, 0)
@@ -206,7 +203,11 @@ void WWindow::Draw(){
             BL; BR; FR;
         glEnd();
     glPopMatrix();
-
     glFlush();
-    SwapBuffers(hardwareDeviceContext);			/* nop if singlebuffered */
+    drawTime = Time::TimeElapsed(drawTime);
+
+    SwapBuffers(hardwareDeviceContext);
+
+    frameCount++;
+    totalTime += drawTime;
 }

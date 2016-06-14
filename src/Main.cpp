@@ -1,11 +1,5 @@
-#include <thread>
-
 #include "WWindow.hpp"
 
-HINSTANCE hInstance;
-HINSTANCE hPrevInstance;
-LPSTR lpCmdLine;
-int nCmdShow;
 bool winapi;
 
 int TMain(){
@@ -39,11 +33,11 @@ int TMain(){
     return 0;
 }
 
-int WINAPI WinMain(HINSTANCE _hInstance, HINSTANCE _hPrevInstance, LPSTR _lpCmdLine, int _nCmdShow){
-    hInstance = _hInstance;
-    hPrevInstance = _hPrevInstance;
-    lpCmdLine = _lpCmdLine;
-    nCmdShow = _nCmdShow;
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow){
+    WWindow::Instance()->hInstance     = hInstance;
+    WWindow::Instance()->hPrevInstance = hPrevInstance;
+    WWindow::Instance()->lpCmdLine     = lpCmdLine;
+    WWindow::Instance()->nCmdShow      = nCmdShow;
     winapi = true;
     return TMain();
 }
