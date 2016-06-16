@@ -1,3 +1,5 @@
+#include <thread>
+#include <windows.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -160,6 +162,7 @@ void WWindow::Start(){
         glEnable(GL_DEPTH_TEST);
 
         ShowWindow(windowHandle, nCmdShow);
+
         while(GetMessage(&windowMessage, windowHandle, 0, 0) > 0){
             TranslateMessage(&windowMessage);
             DispatchMessage(&windowMessage);

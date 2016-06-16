@@ -1,9 +1,13 @@
 #include <windows.h>
 
+#include "Game.hpp"
+
 #pragma once
 
 class WWindow {
 public:
+    Game* game;
+
     static HINSTANCE hInstance;
     static HINSTANCE hPrevInstance;
     static LPSTR lpCmdLine;

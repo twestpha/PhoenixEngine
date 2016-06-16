@@ -1,28 +1,32 @@
 #include "WWindow.hpp"
+#include "Game.hpp"
 
 bool winapi;
 
 int TMain(){
+
     // setup game state here...
+    Game game;
+
+    // Arguments
+    // LPWSTR *szArgList;
+    // int argCount;
+    //
+    //  szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
+    //  if (szArgList == NULL)
+    //  }
+    //  {
+    //      MessageBox(NULL, L"Unable to parse command line", L"Error", MB_OK);
+    //      return 10;
+    //  }
+    //
+    //  for(int i = 0; i < argCount; i++)
+    //  {
+    //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
+    // }
 
     if(winapi){
-        // Arguments
-        // LPWSTR *szArgList;
-        // int argCount;
-        //
-        //  szArgList = CommandLineToArgvW(GetCommandLine(), &argCount);
-        //  if (szArgList == NULL)
-        //  }
-        //  {
-        //      MessageBox(NULL, L"Unable to parse command line", L"Error", MB_OK);
-        //      return 10;
-        //  }
-        //
-        //  for(int i = 0; i < argCount; i++)
-        //  {
-        //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
-        // }
-
+        WWindow::Instance()->game = &game;
         WWindow::Instance()->Start();
     } else {
         // Linux window implementation goes here :D
