@@ -1,4 +1,7 @@
 #include <stdio.h>
+
+#include "Assert.hpp"
+
 #pragma once
 
 template <class T>
@@ -49,6 +52,7 @@ public:
     }
 
     T* At(int index){
+        _Assert(index > 0 && index < used, "Index is out of range");
         return memory[index];
     }
 

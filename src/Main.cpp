@@ -1,12 +1,11 @@
+#include <thread>
+
 #include "WWindow.hpp"
 #include "Game.hpp"
 
 bool winapi;
 
 int TMain(){
-
-    // setup game state here...
-    Game game;
 
     // Arguments
     // LPWSTR *szArgList;
@@ -25,14 +24,17 @@ int TMain(){
     //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
     // }
 
+    Game *game = new Game();
+    std::thread gameThread(Game::Start, game);
+
     if(winapi){
-        WWindow::Instance()->game = &game;
+        WWindow::Instance()->game = game;
         WWindow::Instance()->Start();
     } else {
         // Linux window implementation goes here :D
     }
 
-
+    gameThread.join();
 
     return 0;
 }
