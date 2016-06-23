@@ -1,6 +1,7 @@
 #include "Actor.hpp"
 #include "List.hpp"
 #include "ComponentSystem.hpp"
+#include "TransformComponentSystem.hpp"
 
 #pragma once
 
@@ -10,9 +11,9 @@ public:
     void Start();
     void End();
 private:
-    // For now, just a list of actors and components. Later, list of levels.
-    List<Actor> actorList;
-    List<ComponentSystem> componentSystems;
+    TransformComponentSystem transformComponentSystem;
+
+
 
     bool running;
 };

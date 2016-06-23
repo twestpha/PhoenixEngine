@@ -2,12 +2,21 @@
 
 Game::Game(){
     running = true;
+
+    // Create 5 test actors
+    ActorManager::Instance()->createActor();
+    ActorManager::Instance()->createActor();
+    ActorManager::Instance()->createActor();
+    ActorManager::Instance()->createActor();
+    ActorManager::Instance()->createActor();
 }
 
 void Game::Start(){
+    // Setup runtime threads
+
     while(running){
-        printf("Game state running threaded!\n");
         // Update all the shit
+
     }
 }
 

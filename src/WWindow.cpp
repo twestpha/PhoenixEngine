@@ -44,7 +44,7 @@ LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, W
 
 WWindow* WWindow::Instance(){
     if(!instancePointer){
-        instancePointer = new  WWindow(0, 0, 512, 512, "Default title");
+        instancePointer = new  WWindow(0, 0, 512, 512, "Phoenix Engine");
     }
     return instancePointer;
 }
@@ -208,9 +208,10 @@ void WWindow::Draw(){
         glEnd();
     glPopMatrix();
     glFlush();
-    drawTime = Time::TimeElapsed(drawTime);
+    // drawTime = Time::TimeElapsed(drawTime);
 
     SwapBuffers(hardwareDeviceContext);
+    drawTime = Time::TimeElapsed(drawTime);
 
     frameCount++;
     totalTime += drawTime;

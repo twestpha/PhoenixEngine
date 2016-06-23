@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "Assert.hpp"
 
 #pragma once
@@ -15,10 +13,10 @@ public:
 
     ~List<T>(){
         for(int i; i < max; i++){
-            delete memory[i];
             memory[i] = NULL;
         }
 
+        delete [] memory;
         memory = NULL;
     }
 
@@ -31,33 +29,36 @@ public:
             max *= 2;
             T** newMemory = new T*[max];
 
-            for(int i; i < used; i++){
+            for(int i = 0; i < used; i++){
                 newMemory[i] = memory[i];
             }
 
             memory = newMemory;
         }
 
-        memory[used] = new T(element);
+        memory[used++] = new T(element);
 
-        used++;
     }
 
     void Remove(int index){
-        T* endElement = memory[used];
+        T* endElement = memory[used - 1];
         memory[index] = endElement;
-        memory[used] = NULL;
-
-        used--;
+        memory[used--] = NULL;
     }
 
-    T* At(int index){
-        _Assert(index > 0 && index < used, "Index is out of range");
-        return memory[index];
+    T At(int index){
+        _Assert(index >= 0 && index < used, "Index is out of range");
+        return *memory[index];
     }
 
-    T* operator[](int index){
-        return memory[index];
+    void At(T element, int index){
+        _Assert(index >= 0 && index < used, "Index is out of range");
+        memory[index] = (T*) &element;
+    }
+
+    T operator[](int index){
+        _Assert(index >= 0 && index < used, "Index is out of range");
+        return *memory[index];
     }
 
 private:
