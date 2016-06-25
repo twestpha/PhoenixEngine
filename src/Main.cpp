@@ -25,6 +25,8 @@ int TMain(){
     //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
     // }
 
+    printf("-- Phoenix Engine --\n");
+
     Game *game = new Game();
     std::thread gameThread(Game::Start, game);
 

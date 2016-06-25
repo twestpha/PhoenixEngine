@@ -1,6 +1,5 @@
 #include "Actor.hpp"
 #include "List.hpp"
-#include "ComponentSystem.hpp"
 #include "TransformComponentSystem.hpp"
 
 #pragma once
@@ -12,8 +11,5 @@ public:
     void End();
 private:
     TransformComponentSystem transformComponentSystem;
-
-
-
     bool running;
 };

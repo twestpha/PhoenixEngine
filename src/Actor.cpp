@@ -10,7 +10,9 @@ ActorManager* ActorManager::Instance(){
 }
 
 ActorManager::ActorManager(){
-
+    for(int i(0); i < MINIMUM_FREE_INDICES; i++){ // TODO MAGIC NUMBERWANG
+        freeIndices.Add(i);
+    }
 }
 
 Actor ActorManager::createActor(){
@@ -21,8 +23,10 @@ Actor ActorManager::createActor(){
     } else {
         generation.Add(0);
         index = generation.Used() - 1;
-        _Assert(index < ENTITY_INDEX_MASK + 1, "Allocating actor index is too large.");
+        _Assert(index < ACTOR_INDEX_MASK + 1, "Allocating actor index is too large.");
     }
+
+    return Actor(index, generation[index]);
 }
 
 bool ActorManager::Alive(Actor actor){

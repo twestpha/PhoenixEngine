@@ -13,6 +13,7 @@ public:
 
     ~List<T>(){
         for(int i; i < max; i++){
+            free(memory[i]); // if there's a bug, it's here
             memory[i] = NULL;
         }
 

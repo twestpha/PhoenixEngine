@@ -1,21 +1,44 @@
-#include "ComponentSystem.hpp"
-#include "Vector.hpp"
+#include <map>
+
+#include "Math3D.hpp"
+#include "Actor.hpp"
 
 #pragma once
 
 struct TransformComponentInstance {
-    // Vector3 position;
-    // Vector3 scale;
-    // Vector4 rotation;
+    unsigned int index;
+
+    TransformComponentInstance(unsigned int index){
+        this->index = index;
+    }
 };
 
 struct TransformComponentData {
+    unsigned int usedInstances;
+    unsigned int allocatedInstances;
+    void *instanceBuffer;
 
+    Actor* actor;
+    Vector3* position;
+    Vector3* scale;
+    Vector4* rotation;
 };
 
-class TransformComponentSystem : public ComponentSystem {
+class TransformComponentSystem {
 public:
     TransformComponentSystem();
-private:
+    void Allocate(unsigned int size);
 
+    // Empty function for Transform CS - don't need to update anything.
+    void Update(){}
+
+    void Initialize(Actor actor, Vector3 position, Vector3 scale, Vector4 rotation);
+
+    TransformComponentInstance MakeInstance(unsigned int index);
+    TransformComponentInstance GetInstanceForActor(Actor actor);
+
+    void DestroyInstance(unsigned int index);
+private:
+    TransformComponentData data;
+    std::map<Actor, unsigned int> map;
 };
