@@ -1,12 +1,12 @@
 #include <windows.h>
 
-#include "Game.hpp"
+#include "Level.hpp"
 
 #pragma once
 
 class WWindow {
 public:
-    Game* game;
+    Level* level;
 
     static HINSTANCE hInstance;
     static HINSTANCE hPrevInstance;

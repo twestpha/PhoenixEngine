@@ -5,7 +5,7 @@
 
 extern bool winapi;
 
-inline void _Assert(bool condition, const char* message){
+inline void _Assert(bool condition, const char* message...){
     if(!condition){
         if(winapi){
             MessageBox(NULL, message, "Assert Error", MB_ICONEXCLAMATION | MB_OK);

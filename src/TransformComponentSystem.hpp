@@ -29,9 +29,6 @@ public:
     TransformComponentSystem();
     void Allocate(unsigned int size);
 
-    // Empty function for Transform CS - don't need to update anything.
-    void Update(){}
-
     void Initialize(Actor actor, Vector3 position, Vector3 scale, Vector4 rotation);
 
     TransformComponentInstance MakeInstance(unsigned int index);

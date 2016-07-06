@@ -1,15 +1,18 @@
 #include "Actor.hpp"
 #include "List.hpp"
+
 #include "TransformComponentSystem.hpp"
+#include "ModelComponentSystem.hpp"
 
 #pragma once
 
-class Game {
+class Level {
 public:
-    Game();
+    Level();
     void Start();
     void End();
 private:
     TransformComponentSystem transformComponentSystem;
+    ModelComponentSystem modelComponentSystem;
     bool running;
 };

@@ -28,7 +28,7 @@ LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, W
     	return 0;
     case WM_CLOSE:
         DestroyWindow(windowHandle);
-        WWindow::Instance()->game->End(); // Dirty fucking references. Necessary evil.
+        WWindow::Instance()->level->End();
         return 0;
     case WM_DESTROY:
         PostQuitMessage(0);
