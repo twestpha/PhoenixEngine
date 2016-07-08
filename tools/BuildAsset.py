@@ -135,7 +135,11 @@ def BuildModel(filename):
     inputFile.close()
 
     # Writing
-    outputFile = open(OUTPUT_FOLDER + filename.split(".")[0] + DATA_EXTENSION, "w")
+    try:
+        outputFile = open(OUTPUT_FOLDER + filename.split(".")[0] + DATA_EXTENSION, "w")
+    except:
+        print("Error writing file %s, unable to open file." % (filename.split(".")[0] + DATA_EXTENSION))
+        return 1
 
     count = 0
     output = ""
@@ -157,11 +161,13 @@ def BuildModel(filename):
         u = verts_u[uv_index]
         v = verts_v[uv_index]
 
-        vertlist = {float(x), float(y), float(z), float(nx), float(ny), float(nz), float(u), float(v)}
-        b = bytes()
+        # print(x, y, z, nx, ny, nz, u, v)
 
-        b = b.join((struct.pack('f', val) for val in vertlist))
-        output += b
+        vertlist = [float(x), float(y), float(z), float(nx), float(ny), float(nz), float(u), float(v)]
+        s = struct.pack('f'*len(vertlist), *vertlist)
+        # print(s)
+        output += s
+        # break
 
         count += 3
 

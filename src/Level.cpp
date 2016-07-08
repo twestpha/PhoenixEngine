@@ -15,7 +15,7 @@ Level::Level(){
     Model model;
     Model model2;
 
-    ResourceManager::Instance()->loadModelFromFile("cube.dae", &model);
+    ResourceManager::Instance()->loadModelFromFile("cube.phx", &model);
     // ResourceManager::Instance()->loadModelFromFile("cube.dae", &model2);
 
     ResourceManager::Instance()->Join(); // Close all loading threads running

@@ -1,5 +1,7 @@
-#include "ResourceManager.hpp"
+#include <fstream>
 
+#include "ResourceManager.hpp"
+#include "Allocator.hpp"
 #include "Assert.hpp"
 
 const char* DATA_PATH = "data\\";
@@ -44,31 +46,28 @@ void ResourceManager::loadModelFromFileThreaded(const char* filename, Model* mod
 
     _Assert(filePointer, "Error opening file.");
 
-    char * buffer;
+    void* buffer;
     size_t result;
 
-    // size
-    fseek (filePointer, 0, SEEK_END);
-    long lSize = ftell (filePointer);
-    rewind (filePointer);
+    fseek(filePointer, 0, SEEK_END);
+    long fileSize = ftell(filePointer);
+    rewind(filePointer);
 
     // allocate memory to contain the whole file:
-    buffer = (char*) malloc (sizeof(char)*lSize);
-    if (buffer == NULL) {fputs ("Memory error",stderr); exit (2);}
+    buffer = Allocator::Allocate(fileSize);
 
-    // copy the file into the buffer:
-    result = fread (buffer,1,lSize,filePointer);
-    // buffer[int(lSize)] = '\0';
+    _Assert(buffer, "Error allocating model memory.");
 
-    for(int i(0); i < lSize; ++i){
-        printf("%c", buffer[i]);
+    fread(buffer, 1, fileSize, filePointer);
+
+    // Debug print - remove later
+    for(int i(0); i < fileSize/sizeof(float); ++i){
+        printf("%f ", ((float*)buffer)[i]);
+
+        if(i % 8 == 7){
+            printf("\n");
+        }
     }
-    // if (result != lSize) {fputs ("Reading error",stderr); exit (3);}
-
-    /* the whole file is now loaded in the memory buffer. */
-
-
-    // free (buffer);
 
     fclose(filePointer);
 }
