@@ -6,7 +6,7 @@ template <class T>
 class List {
 public:
     List<T>(){
-        memory = new T*[1];
+        memory = new T*[1]; // TODO Use allocator
         max = 1;
         used = 0;
     }

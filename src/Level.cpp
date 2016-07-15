@@ -10,18 +10,16 @@ Level::Level(){
     Actor testActor = ActorManager::Instance()->createActor();
 
     transformComponentSystem.Allocate(1); // TODO don't leave this a magic number
-    modelComponentSystem.Allocate(1);
+    modelComponentSystem.Allocate(1); // ""
 
-    Model model;
-    Model model2;
-
-    ResourceManager::Instance()->loadModelFromFile("cube.phx", &model);
-    // ResourceManager::Instance()->loadModelFromFile("cube.dae", &model2);
+    // Test model
+    Model* model = new Model();
+    ResourceManager::Instance()->loadModelFromFile("cube.phx", model);
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
     transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 0.0f, 0.0f));
-    modelComponentSystem.Initialize(testActor, 0);
+    modelComponentSystem.Initialize(testActor, *model);
 }
 
 void Level::Start(){

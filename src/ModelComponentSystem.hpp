@@ -28,12 +28,14 @@ public:
     ModelComponentSystem();
     void Allocate(unsigned int size);
 
-    void Initialize(Actor actor, int test);
+    void Initialize(Actor actor, Model model);
 
     ModelComponentInstance MakeInstance(unsigned int index);
     ModelComponentInstance GetInstanceForActor(Actor actor);
 
     void DestroyInstance(unsigned int index);
+
+    void Draw();
 private:
     ModelComponentData data;
     std::map<Actor, unsigned int> map;

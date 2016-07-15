@@ -1,3 +1,7 @@
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "ModelComponentSystem.hpp"
 #include "Assert.hpp"
 #include "Allocator.hpp"
@@ -21,18 +25,21 @@ void ModelComponentSystem::Allocate(unsigned int size){
     newData.allocatedInstances = size;
 
     newData.actor = (Actor*) newData.instanceBuffer;
+    newData.model = (Model*) newData.actor + size;
 
     memcpy(newData.actor, data.actor, data.usedInstances * sizeof(Actor));
+    memcpy(newData.model, data.model, data.usedInstances * sizeof(Model));
 
     Allocator::Deallocate(data.instanceBuffer);
     data = newData;
 }
 
-void ModelComponentSystem::Initialize(Actor actor, int test){
+void ModelComponentSystem::Initialize(Actor actor, Model model){
     ModelComponentInstance instance = MakeInstance(data.usedInstances);
     data.usedInstances++;
 
     data.actor[instance.index] = actor;
+    data.model[instance.index] = model;
 
     map[actor] = instance.index;
 }
@@ -56,4 +63,26 @@ void ModelComponentSystem::DestroyInstance(unsigned int index){
     map.erase(actor);
 
     data.usedInstances--;
+}
+
+void ModelComponentSystem::Draw(){
+    for(int i(0); i < data.usedInstances; ++i){
+        Model model = Model(data.model[i]);
+        void* vertices = model.GetData();
+        int vertexCount = model.vertexCount;
+
+        // Fuck it, access memory directly I guess
+        for(int j(0); j < vertexCount * 8; j+=8){
+            float x = ((float*)vertices)[j + 0];
+            float y = ((float*)vertices)[j + 1];
+            float z = ((float*)vertices)[j + 2];
+            float nx = ((float*)vertices)[j + 3];
+            float ny = ((float*)vertices)[j + 4];
+            float nz = ((float*)vertices)[j + 5];
+            float u = ((float*)vertices)[j + 6];
+            float v = ((float*)vertices)[j + 7];
+
+            glVertex3f(x, y, z);
+        }
+    }
 }

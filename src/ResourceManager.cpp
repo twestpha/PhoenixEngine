@@ -30,7 +30,7 @@ void ResourceManager::Join(){
 }
 
 void ResourceManager::loadModelFromFile(const char* filename, Model* model){
-    printf("[Loading] Model: %s\n", filename);
+    printf("[LOADING] Model: %s\n", filename);
     loadingThreads.push_back(std::thread(ResourceManager::loadModelFromFileThreaded, this, &(*filename), &(*model)));
 
     // register data with map, probably
@@ -61,13 +61,16 @@ void ResourceManager::loadModelFromFileThreaded(const char* filename, Model* mod
     fread(buffer, 1, fileSize, filePointer);
 
     // Debug print - remove later
-    for(int i(0); i < fileSize/sizeof(float); ++i){
-        printf("%f ", ((float*)buffer)[i]);
+    // for(int i(0); i < fileSize/sizeof(float); ++i){
+    //     printf("%f ", ((float*)buffer)[i]);
+    //
+    //     if(i % 8 == 7){
+    //         printf("\n");
+    //     }
+    // }
 
-        if(i % 8 == 7){
-            printf("\n");
-        }
-    }
+    model->SetData(buffer);
+    model->vertexCount = fileSize/(sizeof(float) * 8);
 
     fclose(filePointer);
 }

@@ -11,7 +11,7 @@ public:
     Level();
     void Start();
     void End();
-private:
+public:
     TransformComponentSystem transformComponentSystem;
     ModelComponentSystem modelComponentSystem;
     bool running;
