@@ -104,7 +104,7 @@ def BuildModel(filename):
 
             num_norms = len(line)/3
 
-        if("map-0-array" in line and not uvs_read): # UV positions
+        if("map" in line and "array" in line and not uvs_read): # UV positions
             uvs_read = True
             line = getXMLValue(line).split(" ")
 
@@ -136,7 +136,7 @@ def BuildModel(filename):
 
     # Writing
     try:
-        outputFile = open(OUTPUT_FOLDER + filename.split(".")[0] + DATA_EXTENSION, "w")
+        outputFile = open(OUTPUT_FOLDER + filename.split(".")[0] + DATA_EXTENSION, "wb")
     except:
         print("Error writing file %s, unable to open file." % (filename.split(".")[0] + DATA_EXTENSION))
         return 1
@@ -148,26 +148,37 @@ def BuildModel(filename):
         norm_index = polylist[count + 1]
         uv_index = polylist[count + 2]
 
-        x = verts_x[vert_index]
-        # SWAP Z AND Y UP!!!!!!
-        y = verts_z[vert_index]
-        z = verts_y[vert_index]
+        x = 0.0
+        y = 0.0
+        z = 0.0
 
-        nx = norms_x[norm_index]
-        # SWAP Z AND Y UP!!!!!!!
-        ny = norms_z[norm_index]
-        nz = norms_y[norm_index]
+        nx = 0.0
+        ny = 0.0
+        nz = 0.0
 
-        u = verts_u[uv_index]
-        v = verts_v[uv_index]
+        u = 0.0
+        v = 0.0
+
+        if(vertices_read):
+            x = verts_x[vert_index]
+            # SWAP Z AND Y UP!!!!!!
+            y = verts_z[vert_index]
+            z = verts_y[vert_index]
+
+        if(normals_read):
+            nx = norms_x[norm_index]
+            # SWAP Z AND Y UP!!!!!!!
+            ny = norms_z[norm_index]
+            nz = norms_y[norm_index]
+
+        if(uvs_read):
+            u = verts_u[uv_index]
+            v = verts_v[uv_index]
 
         # print(x, y, z, nx, ny, nz, u, v)
-
         vertlist = [float(x), float(y), float(z), float(nx), float(ny), float(nz), float(u), float(v)]
-        s = struct.pack('f'*len(vertlist), *vertlist)
-        # print(s)
+        s = struct.pack('=%sf' % len(vertlist), *vertlist)
         output += s
-        # break
 
         count += 3
 

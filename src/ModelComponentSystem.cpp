@@ -72,6 +72,7 @@ void ModelComponentSystem::Draw(){
         int vertexCount = model.vertexCount;
 
         // Fuck it, access memory directly I guess
+        // TODO make this not shit
         for(int j(0); j < vertexCount * 8; j+=8){
             float x = ((float*)vertices)[j + 0];
             float y = ((float*)vertices)[j + 1];

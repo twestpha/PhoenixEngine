@@ -14,7 +14,7 @@ Level::Level(){
 
     // Test model
     Model* model = new Model();
-    ResourceManager::Instance()->loadModelFromFile("cube.phx", model);
+    ResourceManager::Instance()->loadModelFromFile("highpoly.phx", model);
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
@@ -26,7 +26,7 @@ void Level::Start(){
     // Setup runtime threads
 
     while(running){
-        // Update all the shit
+        // Update all the components
     }
 }
 

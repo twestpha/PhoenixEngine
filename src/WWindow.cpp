@@ -189,8 +189,8 @@ void WWindow::Draw(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
-        // glTranslatef(trans[0], trans[1], trans[2]);
-        glRotatef(float(frameCount) * 2, 0.0f, 1.0f, 0.0f);
+        glTranslatef(0.0, 0.0f, -3.0f);
+        glRotatef(float(frameCount) * 0.5, 0.0f, 1.0f, 0.0f);
         // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);
         glBegin(GL_TRIANGLES);
             // #define TOP glIndexi(1); glColor3f(1.0f, 0.0f, 0.0f); glVertex3i(0, 1, 0)
