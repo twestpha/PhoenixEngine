@@ -13,7 +13,7 @@ public:
 
     ~List<T>(){
         for(int i; i < max; i++){
-            free(memory[i]); // if there's a bug, it's here
+            free(memory[i]); // use allocator deallocate
             memory[i] = NULL;
         }
 
@@ -28,7 +28,7 @@ public:
     void Add(T element){
         if(used + 1 > max){
             max *= 2;
-            T** newMemory = new T*[max];
+            T** newMemory = new T*[max]; // TODO use allocator
 
             for(int i = 0; i < used; i++){
                 newMemory[i] = memory[i];

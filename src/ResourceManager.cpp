@@ -7,6 +7,8 @@
 
 const char* DATA_PATH = "data\\";
 const int BYTES_PER_VERTEX = 32; // 4 bytes per entry, 8 entries per vertex
+const int FILEPATH_BUFFER_SIZE = 128;
+const int NO_STAT_ERROR = 0;
 
 ResourceManager* ResourceManager::instancePointer;
 
@@ -38,47 +40,41 @@ void ResourceManager::loadModelFromFile(const char* filename, Model* model){
     // register data with map, probably
 }
 
-// TODO make this member function
-long GetFileSize(const char* filename){
-    struct stat stat_buf;
-    int rc = stat(filename, &stat_buf);
-    return rc == 0 ? stat_buf.st_size : -1;
+unsigned long ResourceManager::GetFileSize(const char* filename){
+    struct stat statBuffer;
+    int result = stat(filename, &statBuffer);
+    return result == NO_STAT_ERROR ? statBuffer.st_size : 0;
 }
 
 void ResourceManager::loadModelFromFileThreaded(const char* filename, Model* model){
-    FILE* filePointer;
-    char filePath[100];
-    strcpy(filePath, DATA_PATH);
-    strcat(filePath, filename);
-    filePointer = fopen(filePath, "rb");
-    _Assert(filePointer, "Error opening file.");
+    if(resourceMap[filename]){
+        model = (Model*) resourceMap[filename];
+    } else {
+        resourceMap[filename] = model; // Pre-register the pointer
 
-    void* buffer;
+        FILE* filePointer;
+        char filePath[FILEPATH_BUFFER_SIZE];
+        strcpy(filePath, DATA_PATH);
+        strcat(filePath, filename);
+        filePointer = fopen(filePath, "rb");
+        _Assert(filePointer, "Error opening file.");
 
-    unsigned int fileSize = GetFileSize(filePath);
-    unsigned int vertexCount = fileSize/BYTES_PER_VERTEX;
-    _Assert(fileSize == vertexCount * BYTES_PER_VERTEX, "Error ");
+        void* buffer;
 
-    buffer = Allocator::Allocate(fileSize);
-    _Assert(buffer, "Error allocating model memory.");
+        unsigned long fileSize = GetFileSize(filePath);
+        unsigned int vertexCount = fileSize/BYTES_PER_VERTEX;
+        _Assert(fileSize == vertexCount * BYTES_PER_VERTEX, "Error ");
 
-    unsigned int result = fread(buffer, 1, fileSize, filePointer);
-    _Assert(buffer, "Error reading model to buffer.");
-    _Assert(result == fileSize, "Error reading model size.");
+        buffer = Allocator::Allocate(fileSize);
+        _Assert(buffer, "Error allocating model memory.");
 
-    // Debug print - remove later
-    // for(int i(0); i < vertexCount; ++i){
-    //     printf("[%d] ", i);
-    //
-    //     for(int j(0); j < 8; ++j){
-    //         printf("%f ", ((float*)buffer)[i * 8 + j]);
-    //     }
-    //
-    //     printf("\n");
-    // }
+        unsigned int result = fread(buffer, 1, fileSize, filePointer);
+        _Assert(buffer, "Error reading model to buffer.");
+        _Assert(result == fileSize, "Error reading model size.");
 
-    model->SetData(buffer);
-    model->vertexCount = vertexCount;
+        model->SetData(buffer);
+        model->vertexCount = vertexCount;
 
-    fclose(filePointer);
+        fclose(filePointer);
+    }
 }

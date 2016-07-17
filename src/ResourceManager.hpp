@@ -21,8 +21,10 @@ private:
     ResourceManager();
     ~ResourceManager();
 
+    unsigned long GetFileSize(const char* filename);
+
     void loadModelFromFileThreaded(const char* filename, Model* model);
 
-    std::map<char*, Resource*> resourceMap;
+    std::map<const char*, Resource*> resourceMap;
 
 };

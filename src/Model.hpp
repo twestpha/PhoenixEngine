@@ -13,8 +13,8 @@ class Model : public Resource {
 public:
     Model();
     SetData(void* data);
-    Vertex** GetData();
+    Vertex* GetData();
     int vertexCount;
 private:
-    Vertex** vertices;
+    Vertex* vertices;
 };

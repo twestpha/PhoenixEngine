@@ -210,10 +210,10 @@ void WWindow::Draw(){
         glEnd();
     glPopMatrix();
     glFlush();
-    // drawTime = Time::TimeElapsed(drawTime);
+    drawTime = Time::TimeElapsed(drawTime);
 
     SwapBuffers(hardwareDeviceContext);
-    drawTime = Time::TimeElapsed(drawTime);
+    // drawTime = Time::TimeElapsed(drawTime);
 
     frameCount++;
     totalTime += drawTime;

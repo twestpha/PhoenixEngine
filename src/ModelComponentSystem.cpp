@@ -17,7 +17,7 @@ void ModelComponentSystem::Allocate(unsigned int size){
 
     ModelComponentData newData;
 
-    const unsigned bytes = size * sizeof(Actor);
+    const unsigned bytes = size * (sizeof(Actor) + sizeof(Model));
 
     newData.instanceBuffer = Allocator::Allocate(bytes);
 
@@ -68,22 +68,18 @@ void ModelComponentSystem::DestroyInstance(unsigned int index){
 void ModelComponentSystem::Draw(){
     for(int i(0); i < data.usedInstances; ++i){
         Model model = Model(data.model[i]);
-        void* vertices = model.GetData();
+        Vertex* vertices = model.GetData();
         int vertexCount = model.vertexCount;
 
-        // Fuck it, access memory directly I guess
-        // TODO make this not shit
-        for(int j(0); j < vertexCount * 8; j+=8){
-            float x = ((float*)vertices)[j + 0];
-            float y = ((float*)vertices)[j + 1];
-            float z = ((float*)vertices)[j + 2];
-            float nx = ((float*)vertices)[j + 3];
-            float ny = ((float*)vertices)[j + 4];
-            float nz = ((float*)vertices)[j + 5];
-            float u = ((float*)vertices)[j + 6];
-            float v = ((float*)vertices)[j + 7];
+        // TODO Apply model's transform probably...
 
-            glVertex3f(x, y, z);
+        for(int j(0); j < vertexCount; ++j){
+            Vertex vertex = vertices[j];
+
+            glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
+            glNormal3f(vertex.normal.x, vertex.normal.y, vertex.normal.z);
+            glTexCoord2f(vertex.uvcoord.x, vertex.uvcoord.y);
         }
+
     }
 }

@@ -4,9 +4,9 @@ Model::Model(){
 }
 
 Model::SetData(void* data){
-    vertices = (Vertex**) data;
+    vertices = (Vertex*) data;
 }
 
-Vertex** Model::GetData(){
+Vertex* Model::GetData(){
     return vertices;
 }
