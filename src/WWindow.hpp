@@ -33,7 +33,7 @@ private:
     MSG windowMessage;
     HPALETTE hPalette;
 
-    unsigned int frameCount;
+    unsigned long frameCount;
     double totalTime;
 };
 

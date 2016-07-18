@@ -40,12 +40,12 @@ public:
     bool HasComponentForActor(Actor actor);
     void DestroyInstance(unsigned int index);
 
-    void ApplyTransform(Actor* actor);
+    void ApplyTransform(Actor actor);
 
     Level* level;
 private:
     TransformComponentData data;
-    std::map<Actor, unsigned int> map;
+    std::map<unsigned int, unsigned int> map;
 };
 
 #endif

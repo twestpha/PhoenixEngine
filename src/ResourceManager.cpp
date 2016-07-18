@@ -45,6 +45,8 @@ unsigned long ResourceManager::GetFileSize(const char* filename){
 }
 
 void ResourceManager::loadModelFromFileThreaded(const char* filename, Model* model){
+    // TODO I'm like 90% sure this could result in two copies in a worst-case race condition
+    // Probably __SUPER__ helpful... http://en.cppreference.com/w/cpp/thread/mutex
     if(resourceMap[filename]){
         model = (Model*) resourceMap[filename];
     } else {

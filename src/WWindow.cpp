@@ -187,14 +187,9 @@ void WWindow::Draw(){
     double drawTime = Time::CurrentTime();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glPushMatrix();
-        glTranslatef(0.0, 0.0f, -3.0f);
-        glRotatef(float(frameCount) * 0.5, 0.0f, 1.0f, 0.0f);
-        // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);
-        glBegin(GL_TRIANGLES);
+    // glPushMatrix();
             level->modelComponentSystem.Draw();
-        glEnd();
-    glPopMatrix();
+    // glPopMatrix();
     glFlush();
     drawTime = Time::TimeElapsed(drawTime);
 

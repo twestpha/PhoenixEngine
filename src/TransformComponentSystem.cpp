@@ -48,7 +48,7 @@ void TransformComponentSystem::Initialize(Actor actor, Vector3 position, Vector3
     data.scale[instance.index] = scale;
     data.rotation[instance.index] = rotation;
 
-    map[actor] = instance.index;
+    map[actor.id] = instance.index;
 }
 
 TransformComponentInstance TransformComponentSystem::MakeInstance(unsigned int index){
@@ -56,12 +56,11 @@ TransformComponentInstance TransformComponentSystem::MakeInstance(unsigned int i
 }
 
 TransformComponentInstance TransformComponentSystem::GetInstanceForActor(Actor actor){
-    return MakeInstance(map[actor]);
+    return MakeInstance(map[actor.id]);
 }
 
 bool TransformComponentSystem::HasComponentForActor(Actor actor){
-    // printf("%p\n", map[actor]);
-    return bool(map[actor]);
+    return map.find(actor.id) != map.end();
 }
 
 
@@ -75,14 +74,23 @@ void TransformComponentSystem::DestroyInstance(unsigned int index){
     data.scale[index] = data.scale[lastActorIndex];
     data.rotation[index] = data.rotation[lastActorIndex];
 
-    map[lastActor] = index;
-    map.erase(actor);
+    map[lastActor.id] = index;
+    map.erase(actor.id);
 
     data.usedInstances--;
 }
 
-void TransformComponentSystem::ApplyTransform(Actor* actor){
-    // glTranslatef(0.0, 0.0f, -3.0f);
-    // glRotatef(float(frameCount) * 0.5, 0.0f, 1.0f, 0.0f);
-    // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);
+void TransformComponentSystem::ApplyTransform(Actor actor){
+    TransformComponentInstance instance = GetInstanceForActor(actor);
+
+    Vector3 position = data.position[instance.index];
+    Vector3 scale = data.scale[instance.index];
+    Vector4 rotation = data.rotation[instance.index];
+
+    glScalef(scale.x, scale.y, scale.z);
+    // TODO Quaternions... :(
+    glRotatef(rotation.x, rotation.y, rotation.z, rotation.w);
+    glTranslatef(position.x, position.y, position.z);
+
+
 }

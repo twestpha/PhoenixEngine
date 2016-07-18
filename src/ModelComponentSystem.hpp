@@ -44,7 +44,7 @@ public:
     Level* level;
 private:
     ModelComponentData data;
-    std::map<Actor, unsigned int> map;
+    std::map<unsigned int, unsigned int> map;
 };
 
 #endif

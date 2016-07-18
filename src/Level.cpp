@@ -22,7 +22,7 @@ Level::Level(){
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
-    transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 0.0f, 0.0f));
+    transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -3.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     modelComponentSystem.Initialize(testActor, *model);
 }
 

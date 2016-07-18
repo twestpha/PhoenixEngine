@@ -45,7 +45,7 @@ void ModelComponentSystem::Initialize(Actor actor, Model model){
     // Requirements
     _Assert(level->transformComponentSystem.HasComponentForActor(actor), "Model does not have transform component.");
 
-    map[actor] = instance.index;
+    map[actor.id] = instance.index;
 }
 
 ModelComponentInstance ModelComponentSystem::MakeInstance(unsigned int index){
@@ -53,7 +53,7 @@ ModelComponentInstance ModelComponentSystem::MakeInstance(unsigned int index){
 }
 
 ModelComponentInstance ModelComponentSystem::GetInstanceForActor(Actor actor){
-    return MakeInstance(map[actor]);
+    return MakeInstance(map[actor.id]);
 }
 
 void ModelComponentSystem::DestroyInstance(unsigned int index){
@@ -63,8 +63,8 @@ void ModelComponentSystem::DestroyInstance(unsigned int index){
 
     data.actor[index] = data.actor[lastActorIndex];
 
-    map[lastActor] = index;
-    map.erase(actor);
+    map[lastActor.id] = index;
+    map.erase(actor.id);
 
     data.usedInstances--;
 }
@@ -76,16 +76,18 @@ void ModelComponentSystem::Draw(){
         Vertex* vertices = model.GetData();
         int vertexCount = model.vertexCount;
 
-        // TODO Apply model's transform probably...
+        glPushMatrix();
+            level->transformComponentSystem.ApplyTransform(actor);
 
+            glBegin(GL_TRIANGLES);
+                for(int j(0); j < vertexCount; ++j){
+                    Vertex vertex = vertices[j];
 
-        for(int j(0); j < vertexCount; ++j){
-            Vertex vertex = vertices[j];
-
-            glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
-            glNormal3f(vertex.normal.x, vertex.normal.y, vertex.normal.z);
-            glTexCoord2f(vertex.uvcoord.x, vertex.uvcoord.y);
-        }
-
+                    glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
+                    glNormal3f(vertex.normal.x, vertex.normal.y, vertex.normal.z);
+                    glTexCoord2f(vertex.uvcoord.x, vertex.uvcoord.y);
+                }
+            glEnd();
+        glPopMatrix();
     }
 }
