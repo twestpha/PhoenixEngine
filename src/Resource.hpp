@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RESOURCE_H
+#define RESOURCE_H
 
 class Resource {
 public:
@@ -6,3 +7,5 @@ public:
 private:
     // something, surely
 };
+
+#endif

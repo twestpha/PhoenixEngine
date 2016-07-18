@@ -29,6 +29,7 @@ struct Actor {
 
 class ActorManager {
 public:
+    // TODO make this NOT singleton. Have game own an instance.
     static ActorManager* instancePointer;
     static ActorManager* Instance();
 

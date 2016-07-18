@@ -2,7 +2,8 @@
 
 #include "Level.hpp"
 
-#pragma once
+#ifndef WINDOWS_WINDOW_H
+#define WINDOWS_WINDOW_H
 
 class WWindow {
 public:
@@ -35,3 +36,5 @@ private:
     unsigned int frameCount;
     double totalTime;
 };
+
+#endif

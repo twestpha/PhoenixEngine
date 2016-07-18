@@ -5,7 +5,8 @@
 #include "Resource.hpp"
 #include "Model.hpp"
 
-#pragma once
+#ifndef RESOURCE_MANAGER_H
+#define RESOURCE_MANAGER_H
 
 class ResourceManager {
 public:
@@ -28,3 +29,5 @@ private:
     std::map<const char*, Resource*> resourceMap;
 
 };
+
+#endif

@@ -1,5 +1,4 @@
 #include "Level.hpp"
-
 #include "Math3D.hpp"
 #include "ResourceManager.hpp"
 
@@ -14,11 +13,14 @@ Level::Level(){
     transformComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
     modelComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
 
+    transformComponentSystem.level = this;
+    modelComponentSystem.level = this;
+
     // Test model
     Model* model = new Model();
     ResourceManager::Instance()->loadModelFromFile("highpoly.phx", model);
 
-    ResourceManager::Instance()->Join(); // Close all loading threads running?
+    ResourceManager::Instance()->Join(); // Close all loading threads running
 
     transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, 0.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 0.0f, 0.0f));
     modelComponentSystem.Initialize(testActor, *model);

@@ -185,7 +185,6 @@ void WWindow::Resize(int newWidth, int newHeight){
 
 void WWindow::Draw(){
     double drawTime = Time::CurrentTime();
-    /* rotate a triangle around */
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
@@ -193,19 +192,6 @@ void WWindow::Draw(){
         glRotatef(float(frameCount) * 0.5, 0.0f, 1.0f, 0.0f);
         // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);
         glBegin(GL_TRIANGLES);
-            // #define TOP glIndexi(1); glColor3f(1.0f, 0.0f, 0.0f); glVertex3i(0, 1, 0)
-            // #define FR  glIndexi(2); glColor3f(0.0f, 1.0f, 0.0f); glVertex3i(1, -1, 1)
-            // #define FL  glIndexi(3); glColor3f(0.0f, 0.0f, 1.0f); glVertex3i(-1, -1, 1)
-            // #define BR  glIndexi(3); glColor3f(0.0f, 0.0f, 1.0f); glVertex3i(1, -1, -1)
-            // #define BL  glIndexi(2); glColor3f(0.0f, 1.0f, 0.0f); glVertex3i(-1, -1, -1)
-            //
-            // TOP; FL; FR;
-            // TOP; FR; BR;
-            // TOP; BR; BL;
-            // TOP; BL; FL;
-            // FR; FL; BL;
-            // BL; BR; FR;
-
             level->modelComponentSystem.Draw();
         glEnd();
     glPopMatrix();

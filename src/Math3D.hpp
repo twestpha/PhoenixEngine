@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MATH3D_H
+#define MATH3D_H
 
 struct Vector2 {
     float x, y;
@@ -29,3 +30,5 @@ struct Vector4 {
         this->w = w;
     }
 };
+
+#endif

@@ -36,8 +36,6 @@ void ResourceManager::Join(){
 void ResourceManager::loadModelFromFile(const char* filename, Model* model){
     printf("[LOADING] Model: %s\n", filename);
     loadingThreads.push_back(std::thread(ResourceManager::loadModelFromFileThreaded, this, &(*filename), &(*model)));
-
-    // register data with map, probably
 }
 
 unsigned long ResourceManager::GetFileSize(const char* filename){

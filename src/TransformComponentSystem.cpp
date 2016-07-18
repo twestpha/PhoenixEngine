@@ -1,6 +1,11 @@
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 #include "TransformComponentSystem.hpp"
 #include "Assert.hpp"
 #include "Allocator.hpp"
+#include "Level.hpp"
 
 TransformComponentSystem::TransformComponentSystem(){
     data.usedInstances = 0;
@@ -54,6 +59,12 @@ TransformComponentInstance TransformComponentSystem::GetInstanceForActor(Actor a
     return MakeInstance(map[actor]);
 }
 
+bool TransformComponentSystem::HasComponentForActor(Actor actor){
+    // printf("%p\n", map[actor]);
+    return bool(map[actor]);
+}
+
+
 void TransformComponentSystem::DestroyInstance(unsigned int index){
     unsigned int lastActorIndex = data.usedInstances - 1;
     Actor lastActor = data.actor[lastActorIndex];
@@ -68,4 +79,10 @@ void TransformComponentSystem::DestroyInstance(unsigned int index){
     map.erase(actor);
 
     data.usedInstances--;
+}
+
+void TransformComponentSystem::ApplyTransform(Actor* actor){
+    // glTranslatef(0.0, 0.0f, -3.0f);
+    // glRotatef(float(frameCount) * 0.5, 0.0f, 1.0f, 0.0f);
+    // glRotatef(rot[1], 0.0f, 1.0f, 0.0f);
 }

@@ -2,7 +2,8 @@
 
 #include "Assert.hpp"
 
-#pragma once
+#ifndef ALLOCATOR_H
+#define ALLOCATOR_H
 
 class Allocator {
 public:
@@ -15,3 +16,5 @@ public:
         free(memory);
     }
 };
+
+#endif

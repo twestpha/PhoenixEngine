@@ -5,6 +5,7 @@
 #include "ModelComponentSystem.hpp"
 #include "Assert.hpp"
 #include "Allocator.hpp"
+#include "Level.hpp"
 
 ModelComponentSystem::ModelComponentSystem(){
     data.usedInstances = 0;
@@ -41,6 +42,9 @@ void ModelComponentSystem::Initialize(Actor actor, Model model){
     data.actor[instance.index] = actor;
     data.model[instance.index] = model;
 
+    // Requirements
+    _Assert(level->transformComponentSystem.HasComponentForActor(actor), "Model does not have transform component.");
+
     map[actor] = instance.index;
 }
 
@@ -67,11 +71,13 @@ void ModelComponentSystem::DestroyInstance(unsigned int index){
 
 void ModelComponentSystem::Draw(){
     for(int i(0); i < data.usedInstances; ++i){
+        Actor actor = Actor(data.actor[i]);
         Model model = Model(data.model[i]);
         Vertex* vertices = model.GetData();
         int vertexCount = model.vertexCount;
 
         // TODO Apply model's transform probably...
+
 
         for(int j(0); j < vertexCount; ++j){
             Vertex vertex = vertices[j];

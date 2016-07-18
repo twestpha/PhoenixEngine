@@ -1,4 +1,5 @@
 #include "Assert.hpp"
+#include "Allocator.hpp"
 
 #pragma once
 
@@ -6,14 +7,15 @@ template <class T>
 class List {
 public:
     List<T>(){
-        memory = new T*[1]; // TODO Use allocator
+        // Yeah... should use an allocator... but this works...
+        memory = new T*[1];
         max = 1;
         used = 0;
     }
 
     ~List<T>(){
         for(int i; i < max; i++){
-            free(memory[i]); // use allocator deallocate
+            free(memory[i]);
             memory[i] = NULL;
         }
 
@@ -28,7 +30,7 @@ public:
     void Add(T element){
         if(used + 1 > max){
             max *= 2;
-            T** newMemory = new T*[max]; // TODO use allocator
+            T** newMemory = new T*[max];
 
             for(int i = 0; i < used; i++){
                 newMemory[i] = memory[i];

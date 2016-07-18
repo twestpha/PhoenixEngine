@@ -1,10 +1,14 @@
+#ifndef MODEL_COMPONENT_SYSTEM_H
+#define MODEL_COMPONENT_SYSTEM_H
+
 #include <map>
 
 #include "Math3D.hpp"
 #include "Actor.hpp"
 #include "Model.hpp"
 
-#pragma once
+// Forward declarations
+class Level;
 
 struct ModelComponentInstance {
     unsigned int index;
@@ -36,7 +40,11 @@ public:
     void DestroyInstance(unsigned int index);
 
     void Draw();
+
+    Level* level;
 private:
     ModelComponentData data;
     std::map<Actor, unsigned int> map;
 };
+
+#endif

@@ -1,6 +1,7 @@
 #include <time.h>
 
-#pragma once
+#ifndef TIME_H
+#define TIME_H
 
 class Time {
 public:
@@ -11,3 +12,5 @@ public:
         return float(CurrentTime() - startTime);
     }
 };
+
+#endif

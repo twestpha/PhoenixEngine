@@ -1,7 +1,8 @@
 #include "Resource.hpp"
 #include "Math3D.hpp"
 
-#pragma once
+#ifndef MODEL_H
+#define MODEL_H
 
 struct Vertex {
     Vector3 position;
@@ -18,3 +19,5 @@ public:
 private:
     Vertex* vertices;
 };
+
+#endif

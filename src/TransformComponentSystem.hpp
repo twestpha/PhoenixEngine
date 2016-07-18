@@ -1,9 +1,13 @@
+#ifndef TRANSFORM_COMPONENT_SYSTEM_H
+#define TRANSFORM_COMPONENT_SYSTEM_H
+
 #include <map>
 
 #include "Math3D.hpp"
 #include "Actor.hpp"
 
-#pragma once
+// Forward declarations
+class Level;
 
 struct TransformComponentInstance {
     unsigned int index;
@@ -33,9 +37,15 @@ public:
 
     TransformComponentInstance MakeInstance(unsigned int index);
     TransformComponentInstance GetInstanceForActor(Actor actor);
-
+    bool HasComponentForActor(Actor actor);
     void DestroyInstance(unsigned int index);
+
+    void ApplyTransform(Actor* actor);
+
+    Level* level;
 private:
     TransformComponentData data;
     std::map<Actor, unsigned int> map;
 };
+
+#endif
