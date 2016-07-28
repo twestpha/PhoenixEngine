@@ -16,6 +16,7 @@ public:
     ModelComponentSystem modelComponentSystem;
 
     bool running;
+    double lastFrameTime;
 };
 
 #endif

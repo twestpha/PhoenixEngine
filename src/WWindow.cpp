@@ -153,6 +153,8 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
     }
 
     ReleaseDC(windowHandle, hardwareDeviceContext);
+
+    maxDrawTime = 0.0f;
 }
 
 void WWindow::Start(){
@@ -170,6 +172,7 @@ void WWindow::Start(){
         }
 
         printf("Average draw time: %fms (%f FPS)\n", totalTime/float(frameCount), float(frameCount)/totalTime);
+        printf("Maximum draw time: %fms\n", maxDrawTime);
     }
 }
 
@@ -187,14 +190,18 @@ void WWindow::Draw(){
     double drawTime = Time::CurrentTime();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // glPushMatrix();
+    glPushMatrix();
             level->modelComponentSystem.Draw();
-    // glPopMatrix();
+    glPopMatrix();
     glFlush();
     drawTime = Time::TimeElapsed(drawTime);
 
     SwapBuffers(hardwareDeviceContext);
     // drawTime = Time::TimeElapsed(drawTime);
+
+    if(drawTime > maxDrawTime){
+        maxDrawTime = drawTime;
+    }
 
     frameCount++;
     totalTime += drawTime;

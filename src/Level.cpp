@@ -1,6 +1,7 @@
 #include "Level.hpp"
 #include "Math3D.hpp"
 #include "ResourceManager.hpp"
+#include "Time.hpp"
 
 const int COMPONENT_MAXIMUM_PER_LEVEL = 1024;
 
@@ -22,8 +23,10 @@ Level::Level(){
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
-    transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -3.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 0.0f, 0.0f));
+    transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -3.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f));
     modelComponentSystem.Initialize(testActor, *model);
+
+    lastFrameTime = Time::CurrentTime();
 }
 
 void Level::Start(){
@@ -31,7 +34,14 @@ void Level::Start(){
 
     while(running){
         // Update all the components
+        transformComponentSystem.Update(Time::TimeElapsed(lastFrameTime));
+
+
+
+
+        lastFrameTime = Time::CurrentTime();
     }
+
 }
 
 void Level::End(){

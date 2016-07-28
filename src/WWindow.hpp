@@ -35,6 +35,7 @@ private:
 
     unsigned long frameCount;
     double totalTime;
+    double maxDrawTime;
 };
 
 #endif
