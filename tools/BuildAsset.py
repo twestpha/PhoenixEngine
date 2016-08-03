@@ -142,7 +142,7 @@ def BuildModel(filename):
         return 1
 
     count = 0
-    output = ""
+    output = b""
     while(count < len(polylist)):
         vert_index = polylist[count + 0]
         norm_index = polylist[count + 1]
