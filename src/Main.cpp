@@ -1,7 +1,7 @@
 #include <thread>
 
 #include "WWindow.hpp"
-#include "Level.hpp"
+#include "Game.hpp"
 #include "List.hpp"
 
 bool winapi;
@@ -27,11 +27,11 @@ int TMain(){
 
     printf("-- Phoenix Engine --\n");
 
-    Level *level = new Level();
-    std::thread gameThread(Level::Start, level);
+    Game *game = new Game();
+    std::thread gameThread(Game::Start, game);
 
     if(winapi){
-        WWindow::Instance()->level = level;
+        WWindow::Instance()->game = game;
         WWindow::Instance()->Start();
     } else {
         // Linux window implementation goes here :D

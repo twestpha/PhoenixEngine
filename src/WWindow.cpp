@@ -28,7 +28,7 @@ LRESULT CALLBACK windowCallbackFunction(HWND windowHandle, UINT windowMessage, W
     	return 0;
     case WM_CLOSE:
         DestroyWindow(windowHandle);
-        WWindow::Instance()->level->End();
+        WWindow::Instance()->game->End();
         return 0;
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -191,7 +191,7 @@ void WWindow::Draw(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
-            level->modelComponentSystem.Draw();
+        game->Draw();
     glPopMatrix();
     glFlush();
     drawTime = Time::TimeElapsed(drawTime);
@@ -205,4 +205,6 @@ void WWindow::Draw(){
 
     frameCount++;
     totalTime += drawTime;
+
+    game->Unblock();
 }

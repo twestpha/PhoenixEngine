@@ -9,14 +9,10 @@
 class Level {
 public:
     Level();
-    void Start();
-    void End();
+    void Update();
 
     TransformComponentSystem transformComponentSystem;
     ModelComponentSystem modelComponentSystem;
-
-    bool running;
-    double lastFrameTime;
 };
 
 #endif

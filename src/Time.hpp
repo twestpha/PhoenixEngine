@@ -4,13 +4,14 @@
 #define TIME_H
 
 class Time {
+private:
+    static double lastFrameTime;
+
 public:
-    static double CurrentTime(){
-        return float(clock())/CLOCKS_PER_SEC;
-    }
-    static double TimeElapsed(double startTime){
-        return float(CurrentTime() - startTime);
-    }
+    static double CurrentTime();
+    static double TimeElapsed(double startTime);
+    static double TimeDelta();
+    static void UpdatelastFrameTime();
 };
 
 #endif

@@ -6,8 +6,6 @@
 const int COMPONENT_MAXIMUM_PER_LEVEL = 1024;
 
 Level::Level(){
-    running = true;
-
     // Create test actors
     Actor testActor = ActorManager::Instance()->createActor();
 
@@ -25,25 +23,9 @@ Level::Level(){
 
     transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -3.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f));
     modelComponentSystem.Initialize(testActor, *model);
-
-    lastFrameTime = Time::CurrentTime();
 }
 
-void Level::Start(){
-    // Setup runtime threads
-
-    while(running){
-        // Update all the components
-        transformComponentSystem.Update(Time::TimeElapsed(lastFrameTime));
-
-
-
-
-        lastFrameTime = Time::CurrentTime();
-    }
-
-}
-
-void Level::End(){
-    running = false;
+void Level::Update(){
+    // update all comp sys's that need it
+    transformComponentSystem.Update(Time::TimeDelta());
 }

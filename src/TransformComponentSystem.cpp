@@ -87,15 +87,10 @@ void TransformComponentSystem::ApplyTransform(Actor actor){
     Vector3 scale = data.scale[instance.index];
     Vector4 rotation = data.rotation[instance.index];
 
-
     // TODO Quaternions... :(
     glTranslatef(position.x, position.y, position.z);
-
     glRotatef(rotation.x, rotation.y, rotation.z, rotation.w);
-
     glScalef(scale.x, scale.y, scale.z);
-    
-
 }
 
 void TransformComponentSystem::Update(double timeElapsed){

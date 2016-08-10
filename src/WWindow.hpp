@@ -1,13 +1,13 @@
 #include <windows.h>
 
-#include "Level.hpp"
+#include "Game.hpp"
 
 #ifndef WINDOWS_WINDOW_H
 #define WINDOWS_WINDOW_H
 
 class WWindow {
 public:
-    Level* level;
+    Game* game;
 
     static HINSTANCE hInstance;
     static HINSTANCE hPrevInstance;
