@@ -1,21 +1,12 @@
 #include "Actor.hpp"
 
-ActorManager* ActorManager::instancePointer;
-
-ActorManager* ActorManager::Instance(){
-    if(!instancePointer){
-        instancePointer = new ActorManager();
-    }
-    return instancePointer;
-}
-
 ActorManager::ActorManager(){
     for(int i(0); i < MINIMUM_FREE_INDICES; i++){
         freeIndices.Add(i);
     }
 }
 
-Actor ActorManager::createActor(){
+Actor ActorManager::CreateActor(){
     unsigned int index;
     if(freeIndices.Used() > MINIMUM_FREE_INDICES){
         index = freeIndices[0];

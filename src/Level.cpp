@@ -6,8 +6,11 @@
 const int COMPONENT_MAXIMUM_PER_LEVEL = 1024;
 
 Level::Level(){
+}
+
+void Level::Initialize(){
     // Create test actors
-    Actor testActor = ActorManager::Instance()->createActor();
+    Actor testActor = game->CreateActor();
 
     transformComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
     modelComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
@@ -21,11 +24,11 @@ Level::Level(){
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
-    transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -3.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f));
+    transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -6.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f));
     modelComponentSystem.Initialize(testActor, *model);
 }
 
 void Level::Update(){
     // update all comp sys's that need it
-    transformComponentSystem.Update(Time::TimeDelta());
+    transformComponentSystem.Update();
 }

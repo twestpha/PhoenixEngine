@@ -171,8 +171,8 @@ void WWindow::Start(){
             DispatchMessage(&windowMessage);
         }
 
-        printf("Average draw time: %fms (%f FPS)\n", totalTime/float(frameCount), float(frameCount)/totalTime);
-        printf("Maximum draw time: %fms\n", maxDrawTime);
+        printf("Average draw time: %f seconds (%f FPS)\n", totalTime/float(frameCount), float(frameCount)/totalTime);
+        printf("Maximum draw time: %f seconds (%f FPS)\n", maxDrawTime, 1.0f/maxDrawTime);
     }
 }
 
@@ -183,7 +183,6 @@ void WWindow::Resize(int newWidth, int newHeight){
     gluPerspective(60.0, (float)newWidth/newHeight, 0.001, 100.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -3.0f);
 }
 
 void WWindow::Draw(){

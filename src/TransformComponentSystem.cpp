@@ -6,6 +6,7 @@
 #include "Assert.hpp"
 #include "Allocator.hpp"
 #include "Level.hpp"
+#include "Time.hpp"
 
 TransformComponentSystem::TransformComponentSystem(){
     data.usedInstances = 0;
@@ -87,15 +88,14 @@ void TransformComponentSystem::ApplyTransform(Actor actor){
     Vector3 scale = data.scale[instance.index];
     Vector4 rotation = data.rotation[instance.index];
 
-    // TODO Quaternions... :(
     glTranslatef(position.x, position.y, position.z);
     glRotatef(rotation.x, rotation.y, rotation.z, rotation.w);
     glScalef(scale.x, scale.y, scale.z);
 }
 
-void TransformComponentSystem::Update(double timeElapsed){
+void TransformComponentSystem::Update(){
     for(int i(0); i < data.usedInstances; ++i){
-        data.rotation[i].x += (50.0f * timeElapsed);
+        data.rotation[i].x += (50.0f * Time::TimeDelta());
     }
 
 }

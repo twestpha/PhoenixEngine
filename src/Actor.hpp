@@ -1,7 +1,8 @@
 #include "Assert.hpp"
 #include "List.hpp"
 
-#pragma once
+#ifndef ACTOR_H
+#define ACTOR_H
 
 // Code from http://bitsquid.blogspot.com/2014/08/building-data-oriented-entity-system.html
 const unsigned ACTOR_INDEX_BITS = 22;
@@ -29,16 +30,14 @@ struct Actor {
 
 class ActorManager {
 public:
-    // TODO make this NOT singleton. Have game own an instance.
-    static ActorManager* instancePointer;
-    static ActorManager* Instance();
+    ActorManager();
 
-    Actor createActor();
+    Actor CreateActor();
     bool Alive(Actor actor);
     void Destroy(Actor& actor);
 private:
-    ActorManager();
-
     List<unsigned int> generation;
     List<unsigned int> freeIndices;
 };
+
+#endif

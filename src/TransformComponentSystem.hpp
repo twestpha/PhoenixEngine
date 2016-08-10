@@ -42,8 +42,8 @@ public:
 
     void ApplyTransform(Actor actor);
 
-    // TODO Test update/elapsed functions, as well as giving us some movement
-    void Update(double timeElapsed);
+    // TODO remove this later...
+    void Update();
 
     Level* level;
 private:
