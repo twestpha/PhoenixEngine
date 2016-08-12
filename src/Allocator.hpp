@@ -12,7 +12,7 @@ public:
     }
 
     static void Deallocate(void* memory){
-        _Assert(memory, "Deallocating null memory.");
+        Assert_(memory, "Deallocating null memory.");
         free(memory);
     }
 };

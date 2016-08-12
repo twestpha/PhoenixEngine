@@ -7,8 +7,7 @@ template <class T>
 class List {
 public:
     List<T>(){
-        // Yeah... should use an allocator... but this works...
-        memory = new T*[1];
+        memory = (T**) Allocator::Allocate(sizeof(T*));
         max = 1;
         used = 0;
     }
@@ -19,8 +18,7 @@ public:
             memory[i] = NULL;
         }
 
-        delete [] memory;
-        memory = NULL;
+        Allocator::Deallocate(memory);
     }
 
     int Used(){
@@ -50,17 +48,17 @@ public:
     }
 
     T At(int index){
-        _Assert(index >= 0 && index < used, "Index is out of range");
+        Assert_(index >= 0 && index < used, "Index is out of range");
         return *memory[index];
     }
 
     void At(T element, int index){
-        _Assert(index >= 0 && index < used, "Index is out of range");
+        Assert_(index >= 0 && index < used, "Index is out of range");
         memory[index] = (T*) &element;
     }
 
     T operator[](int index){
-        _Assert(index >= 0 && index < used, "Index is out of range");
+        Assert_(index >= 0 && index < used, "Index is out of range");
         return *memory[index];
     }
 

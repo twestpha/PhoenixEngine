@@ -15,7 +15,7 @@ TransformComponentSystem::TransformComponentSystem(){
 }
 
 void TransformComponentSystem::Allocate(unsigned int size){
-    _Assert(size > data.usedInstances, "Component system 'TransformComponentSystem' trying to allocate less memory than it's already using\n");
+    Assert_(size > data.usedInstances, "Component system 'TransformComponentSystem' trying to allocate less memory than it's already using\n");
 
     TransformComponentData newData;
 

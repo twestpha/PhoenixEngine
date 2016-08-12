@@ -45,7 +45,8 @@ unsigned long ResourceManager::GetFileSize(const char* filename){
 }
 
 void ResourceManager::loadModelFromFileThreaded(const char* filename, Model* model){
-    // TODO I'm like 90% sure this could result in two copies in a worst-case race condition
+    // I'm like 90% sure this could result in two copies in an absolute worst-case race condition
+    // but... nothing's happened yet.
     // Probably __SUPER__ helpful... http://en.cppreference.com/w/cpp/thread/mutex
     if(resourceMap[filename]){
         model = (Model*) resourceMap[filename];
@@ -57,20 +58,20 @@ void ResourceManager::loadModelFromFileThreaded(const char* filename, Model* mod
         strcpy(filePath, DATA_PATH);
         strcat(filePath, filename);
         filePointer = fopen(filePath, "rb");
-        _Assert(filePointer, "Error opening file.");
+        Assert_(filePointer, "Error opening file.");
 
         void* buffer;
 
         unsigned long fileSize = GetFileSize(filePath);
         unsigned int vertexCount = fileSize/BYTES_PER_VERTEX;
-        _Assert(fileSize == vertexCount * BYTES_PER_VERTEX, "Error ");
+        Assert_(fileSize == vertexCount * BYTES_PER_VERTEX, "Error ");
 
         buffer = Allocator::Allocate(fileSize);
-        _Assert(buffer, "Error allocating model memory.");
+        Assert_(buffer, "Error allocating model memory.");
 
         unsigned int result = fread(buffer, 1, fileSize, filePointer);
-        _Assert(buffer, "Error reading model to buffer.");
-        _Assert(result == fileSize, "Error reading model size.");
+        Assert_(buffer, "Error reading model to buffer.");
+        Assert_(result == fileSize, "Error reading model size.");
 
         model->SetData(buffer);
         model->vertexCount = vertexCount;

@@ -14,7 +14,7 @@ Actor ActorManager::CreateActor(){
     } else {
         generation.Add(0);
         index = generation.Used() - 1;
-        _Assert(index < ACTOR_INDEX_MASK + 1, "Allocating actor index is too large.");
+        Assert_(index < ACTOR_INDEX_MASK + 1, "Allocating actor index is too large.");
     }
 
     return Actor(index, generation[index]);

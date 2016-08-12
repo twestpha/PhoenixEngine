@@ -14,7 +14,7 @@ ModelComponentSystem::ModelComponentSystem(){
 }
 
 void ModelComponentSystem::Allocate(unsigned int size){
-    _Assert(size > data.usedInstances, "Component system 'ModelComponentSystem' trying to allocate less memory than it's already using\n");
+    Assert_(size > data.usedInstances, "Component system 'ModelComponentSystem' trying to allocate less memory than it's already using\n");
 
     ModelComponentData newData;
 
@@ -43,7 +43,7 @@ void ModelComponentSystem::Initialize(Actor actor, Model model){
     data.model[instance.index] = model;
 
     // Requirements
-    _Assert(level->transformComponentSystem.HasComponentForActor(actor), "Model does not have transform component.");
+    Assert_(level->transformComponentSystem.HasComponentForActor(actor), "Model does not have transform component.");
 
     map[actor.id] = instance.index;
 }

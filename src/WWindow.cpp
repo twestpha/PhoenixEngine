@@ -70,11 +70,11 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
     	windowClass.lpszMenuName  = NULL;
     	windowClass.lpszClassName = "OpenGL";
 
-    	_Assert(RegisterClass(&windowClass), "Failed to register window class.");
+    	Assert_(RegisterClass(&windowClass), "Failed to register window class.");
     }
 
     windowHandle = CreateWindow("OpenGL", title, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, x, y, width, height, NULL, NULL, hInstance, NULL);
-    _Assert(windowHandle, "Error creating window handle.");
+    Assert_(windowHandle, "Error creating window handle.");
     hardwareDeviceContext = GetDC(windowHandle);
 
     // CLEAR THESE BITS
@@ -87,9 +87,9 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
     pixelFormatDescriptor.cColorBits   = 32;
 
     pixelFormat = ChoosePixelFormat(hardwareDeviceContext, &pixelFormatDescriptor);
-    _Assert(pixelFormat, "Could not find a suitable pixel format.");
+    Assert_(pixelFormat, "Could not find a suitable pixel format.");
     bool couldSetPixelFormat = SetPixelFormat(hardwareDeviceContext, pixelFormat, &pixelFormatDescriptor);
-    _Assert(couldSetPixelFormat, "Could not set pixel format specified");
+    Assert_(couldSetPixelFormat, "Could not set pixel format specified");
     DescribePixelFormat(hardwareDeviceContext, pixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pixelFormatDescriptor);
 
     if(pixelFormatDescriptor.dwFlags & PFD_NEED_PALETTE || pixelFormatDescriptor.iPixelType == PFD_TYPE_COLORINDEX){
