@@ -43,7 +43,7 @@ void ModelComponentSystem::Initialize(Actor actor, Model model){
     data.model[instance.index] = model;
 
     // Requirements
-    Assert_(level->transformComponentSystem.HasComponentForActor(actor), "Model does not have transform component.");
+    Assert_(level->transformComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have transform component.", actor.String());
 
     map[actor.id] = instance.index;
 }

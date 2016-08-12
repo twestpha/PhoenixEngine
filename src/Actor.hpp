@@ -26,6 +26,10 @@ struct Actor {
     Actor(unsigned int index, unsigned int generation){
         this->id = (index << ACTOR_INDEX_BITS) | (generation & ACTOR_GENERATION_MASK);
     }
+
+    const char* String(){
+        return "NOT IMPLEMENTED YET";
+    }
 };
 
 class ActorManager {
