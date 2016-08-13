@@ -3,6 +3,7 @@
 #include "Game.hpp"
 #include "Time.hpp"
 #include "Level.hpp"
+#include "Renderer.hpp"
 
 Game::Game(){
     currentGameState = Running;
@@ -11,6 +12,13 @@ Game::Game(){
     testLevel->game = this;
     testLevel->Initialize();
     levels.Add(*testLevel);
+
+    renderer = new Renderer();
+}
+
+Game::~Game(){
+    delete renderer;
+    renderer = NULL;
 }
 
 void Game::Start(){
@@ -28,6 +36,7 @@ void Game::Run(){
         }
 
         Time::UpdatelastFrameTime();
+
         while(currentGameState == WaitingForDraw){
             std::this_thread::yield();
         }
@@ -35,6 +44,7 @@ void Game::Run(){
 }
 
 void Game::End(){
+    renderer->Shutdown();
     currentGameState = Exiting;
 }
 
@@ -43,9 +53,7 @@ void Game::notifyHasDrawn(){
 }
 
 void Game::Draw(){
-    for(int i(0); i < levels.Used(); ++i){
-        levels[i].modelComponentSystem.Draw();
-    }
+    renderer->Draw(this);
 }
 
 Actor Game::CreateActor(){
