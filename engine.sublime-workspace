@@ -40,20 +40,45 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Trevor/Code/Engine"
+		"/C/Users/Trevor/Code/Engine",
+		"/C/Users/Trevor/Code/Engine/res",
+		"/C/Users/Trevor/Code/Engine/res/materials",
+		"/C/Users/Trevor/Code/Engine/res/models",
+		"/C/Users/Trevor/Code/Engine/res/textures",
+		"/C/Users/Trevor/Code/Engine/src"
 	],
 	"file_history":
 	[
+		"/C/Users/Trevor/Code/Engine/src/Game.hpp",
+		"/C/Users/Trevor/Code/Engine/src/WWindow.cpp",
+		"/C/Users/Trevor/Code/Engine/src/MaterialComponentSystem.hpp",
+		"/C/Users/Trevor/Code/Engine/src/MaterialComponentSystem.cpp",
+		"/C/Users/Trevor/Code/Engine/src/ModelComponentSystem.cpp",
+		"/C/Users/Trevor/Code/Engine/src/Assert.hpp",
+		"/C/Users/Trevor/Code/Engine/src/TransformComponentSystem.hpp",
+		"/C/Users/Trevor/Code/Engine/src/TransformComponentSystem.cpp",
+		"/C/Users/Trevor/Code/Engine/src/Game.cpp",
+		"/C/Users/Trevor/Code/Engine/src/WWindow.hpp",
+		"/C/Users/Trevor/Code/Engine/src/Actor.cpp",
+		"/C/Users/Trevor/Code/Engine/src/Actor.hpp",
+		"/C/Users/Trevor/Code/Engine/src/Level.cpp",
+		"/C/Users/Trevor/Code/Engine/src/Main.c",
+		"/C/Users/Trevor/Code/Engine/makefile",
+		"/C/Users/Trevor/Code/Engine/src/Level.hpp",
+		"/C/Users/Trevor/Code/Engine/src/ModelComponentSystem.hpp",
+		"/C/Users/Trevor/Code/Engine/src/Allocator.hpp",
+		"/C/Users/Trevor/Code/Engine/src/List.hpp"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
+			""
 		]
 	},
 	"find_state":
@@ -61,6 +86,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"blocking",
+			"12",
+			"T",
+			"data",
+			"message",
+			"Message",
+			"message",
+			"Rest",
+			"First",
+			"ANSI",
+			"'",
+			"\"",
+			"Transform",
+			"level",
+			"Transform",
+			"todo"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -85,7 +126,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -122,7 +163,7 @@
 	"project": "engine.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -131,6 +172,34 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"wwindo",
+				"src\\WWindow.cpp"
+			],
+			[
+				"level",
+				"src\\Level.cpp"
+			],
+			[
+				"trans",
+				"src\\TransformComponentSystem.hpp"
+			],
+			[
+				"alloca",
+				"src\\Allocator.hpp"
+			],
+			[
+				"list.hpp",
+				"src\\List.hpp"
+			],
+			[
+				"level.h",
+				"src\\Level.hpp"
+			],
+			[
+				"game.",
+				"src\\Game.cpp"
+			]
 		],
 		"width": 0.0
 	},

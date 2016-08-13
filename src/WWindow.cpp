@@ -205,5 +205,5 @@ void WWindow::Draw(){
     frameCount++;
     totalTime += drawTime;
 
-    game->Unblock();
+    game->notifyHasDrawn();
 }

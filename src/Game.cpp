@@ -5,7 +5,7 @@
 #include "Level.hpp"
 
 Game::Game(){
-    running = true;
+    currentGameState = Running;
 
     Level* testLevel = new Level();
     testLevel->game = this;
@@ -20,27 +20,26 @@ void Game::Start(){
 void Game::Run(){
     Time::UpdatelastFrameTime();
 
-    while(running){
-        blocking = true;
+    while(currentGameState != Exiting){
+        currentGameState = WaitingForDraw;
 
         for(int i(0); i < levels.Used(); ++i){
             levels[i].Update();
         }
 
         Time::UpdatelastFrameTime();
-        while(blocking){
+        while(currentGameState == WaitingForDraw){
             std::this_thread::yield();
         }
     }
 }
 
 void Game::End(){
-    Unblock();
-    running = false;
+    currentGameState = Exiting;
 }
 
-void Game::Unblock(){
-    blocking = false;
+void Game::notifyHasDrawn(){
+    currentGameState = Running;
 }
 
 void Game::Draw(){

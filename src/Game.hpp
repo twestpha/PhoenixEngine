@@ -9,12 +9,16 @@ class Level;
 
 class Game {
 public:
+    enum GameState {
+        Running, Paused, Exiting, WaitingForDraw
+    };
+
     Game();
 
     void Start();
     void Run();
     void End();
-    void Unblock();
+    void notifyHasDrawn();
 
     void Draw();
 
@@ -24,8 +28,7 @@ private:
     ActorManager actorManager;
     List<Level> levels;
 
-    bool running;
-    bool blocking;
+    GameState currentGameState;
 };
 
 #endif
