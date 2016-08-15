@@ -47,9 +47,9 @@ public:
         memory[used--] = NULL;
     }
 
-    T At(int index){
+    T& At(int index){
         Assert_(index >= 0 && index < used, "Index is out of range");
-        return *memory[index];
+        return (T&) *memory[index];
     }
 
     void At(T element, int index){
@@ -57,9 +57,9 @@ public:
         memory[index] = (T*) &element;
     }
 
-    T operator[](int index){
+    T& operator[](int index){
         Assert_(index >= 0 && index < used, "Index is out of range");
-        return *memory[index];
+        return (T&) *memory[index];
     }
 
 private:

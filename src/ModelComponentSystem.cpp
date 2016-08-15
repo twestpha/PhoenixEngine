@@ -69,25 +69,27 @@ void ModelComponentSystem::DestroyInstance(unsigned int index){
     data.usedInstances--;
 }
 
-void ModelComponentSystem::Draw(){
-    for(int i(0); i < data.usedInstances; ++i){
-        Actor actor = Actor(data.actor[i]);
-        Model model = Model(data.model[i]);
-        Vertex* vertices = model.GetData();
-        int vertexCount = model.vertexCount;
+void ModelComponentSystem::Draw(Actor actor){
+    ModelComponentInstance instance = map[actor.id];
+    Model model = data.model[instance.index];
+    Vertex* vertices = model.GetData();
+    int vertexCount = model.vertexCount;
 
-        glPushMatrix();
-            level->transformComponentSystem.ApplyTransform(actor);
+    glBegin(GL_TRIANGLES);
+        for(int i(0); i < vertexCount; ++i){
+            Vertex vertex = vertices[i];
 
-            glBegin(GL_TRIANGLES);
-                for(int j(0); j < vertexCount; ++j){
-                    Vertex vertex = vertices[j];
+            glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
+            glNormal3f(vertex.normal.x, vertex.normal.y, vertex.normal.z);
+            glTexCoord2f(vertex.uvcoord.x, vertex.uvcoord.y);
+        }
+    glEnd();
+}
 
-                    glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
-                    glNormal3f(vertex.normal.x, vertex.normal.y, vertex.normal.z);
-                    glTexCoord2f(vertex.uvcoord.x, vertex.uvcoord.y);
-                }
-            glEnd();
-        glPopMatrix();
-    }
+int ModelComponentSystem::UsedInstances(){
+    return data.usedInstances;
+}
+
+Actor ModelComponentSystem::GetActorForIndex(int index){
+    return (Actor) data.actor[index];
 }

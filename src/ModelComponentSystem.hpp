@@ -39,7 +39,10 @@ public:
 
     void DestroyInstance(unsigned int index);
 
-    void Draw();
+    // Drawing Methods
+    void Draw(Actor actor);
+    int UsedInstances();
+    Actor GetActorForIndex(int index);
 
     Level* level;
 private:

@@ -15,8 +15,18 @@ void Renderer::Draw(Game* game){
 
     glPushMatrix();
         for(int i(0); i < game->levels.Used(); ++i){
-            game->levels[i].modelComponentSystem.Draw();
-            // NOT JUST MCS NOW
+            // get actors...
+            Level& level = game->levels[i];
+            int modelCount = level.ModelCount();
+
+            for(int j(0); j < modelCount; ++j){
+                Actor actor = level.modelComponentSystem.GetActorForIndex(j);
+                glPushMatrix();
+                    level.transformComponentSystem.ApplyTransform(actor);
+                    level.modelComponentSystem.Draw(actor);
+                glPopMatrix();
+            }
+            // printf("Size: %d, level: %p\n", sizeof(game->levels[i]), (Level*) &game->levels[i]);
         }
     glPopMatrix();
     glFlush();

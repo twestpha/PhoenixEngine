@@ -19,6 +19,8 @@ public:
     void Initialize();
     void Update();
 
+    int ModelCount();
+
     TransformComponentSystem transformComponentSystem;
     ModelComponentSystem modelComponentSystem;
 };

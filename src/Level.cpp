@@ -20,7 +20,7 @@ void Level::Initialize(){
 
     // Test model
     Model* model = new Model();
-    ResourceManager::Instance()->loadModelFromFile("cube.phx", model);
+    ResourceManager::Instance()->loadModelFromFile("highpoly.phx", model);
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
@@ -31,4 +31,8 @@ void Level::Initialize(){
 void Level::Update(){
     // update all comp sys's that need it
     transformComponentSystem.Update();
+}
+
+int Level::ModelCount(){
+    return modelComponentSystem.UsedInstances();
 }
