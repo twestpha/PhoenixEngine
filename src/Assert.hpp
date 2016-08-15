@@ -16,7 +16,7 @@
 // Windows Color Codes
 // no source because windows is fucking stupid
 #define WINDOWS_COLOR_RED   12
-#define WINDOWS_COLOR_RESET 15
+#define WINDOWS_COLOR_RESET 7
 
 #define BUFFER_SIZE 256
 
@@ -29,13 +29,12 @@ inline void Assert_(bool condition, const char* message, const char* data = NULL
 
         if(winapi){
         	HANDLE  hConsole;
-	  		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
             MessageBox(NULL, buffer, "Assertion Failed", MB_ICONEXCLAMATION | MB_OK);
     		SetConsoleTextAttribute(hConsole, WINDOWS_COLOR_RED);
     		printf("[ASSERT ERROR]: %s\n", buffer);
     		SetConsoleTextAttribute(hConsole, WINDOWS_COLOR_RESET);
-
         } else {
         	printf("%s[ASSERT ERROR]: %s%s\n", ANSI_COLOR_RED, buffer, ANSI_COLOR_RESET);
 

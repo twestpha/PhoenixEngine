@@ -4,9 +4,14 @@
 
 #include "Renderer.hpp"
 #include "Time.hpp"
+#include "GLHelpers.hpp"
 
 Renderer::Renderer(){
     maxDrawTime = 0.0f;
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+
+    Assert_(GLHelper::GLHelperInitialize(), "Error initializing GL Helper library.");
 }
 
 void Renderer::Draw(Game* game){
@@ -15,7 +20,6 @@ void Renderer::Draw(Game* game){
 
     glPushMatrix();
         for(int i(0); i < game->levels.Used(); ++i){
-            // get actors...
             Level& level = game->levels[i];
             int modelCount = level.ModelCount();
 

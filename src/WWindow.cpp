@@ -160,8 +160,6 @@ void WWindow::Start(){
         hardwareGLRenderContext = wglCreateContext(hardwareDeviceContext);
         wglMakeCurrent(hardwareDeviceContext, hardwareGLRenderContext);
 
-        glEnable(GL_DEPTH_TEST);
-
         ShowWindow(windowHandle, nCmdShow);
 
         while(GetMessage(&windowMessage, windowHandle, 0, 0) > 0){
