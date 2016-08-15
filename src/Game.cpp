@@ -7,13 +7,13 @@
 
 Game::Game(){
     currentGameState = Running;
+    renderer = new Renderer();
 
     Level* testLevel = new Level();
     testLevel->game = this;
     testLevel->Initialize();
     levels.Add(*testLevel);
 
-    renderer = new Renderer();
 }
 
 Game::~Game(){

@@ -6,6 +6,7 @@
 #include "List.hpp"
 #include "TransformComponentSystem.hpp"
 #include "ModelComponentSystem.hpp"
+#include "MaterialComponentSystem.hpp"
 
 // Forward declarations
 class Game;
@@ -23,6 +24,7 @@ public:
 
     TransformComponentSystem transformComponentSystem;
     ModelComponentSystem modelComponentSystem;
+    MaterialComponentSystem materialComponentSystem;
 };
 
 #endif

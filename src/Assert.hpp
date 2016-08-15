@@ -15,8 +15,9 @@
 
 // Windows Color Codes
 // no source because windows is fucking stupid
-#define WINDOWS_COLOR_RED   12
-#define WINDOWS_COLOR_RESET 7
+#define WINDOWS_COLOR_RED    12
+#define WINDOWS_COLOR_YELLOW 14
+#define WINDOWS_COLOR_RESET  7
 
 #define BUFFER_SIZE 256
 
@@ -31,14 +32,30 @@ inline void Assert_(bool condition, const char* message, const char* data = NULL
         	HANDLE  hConsole;
             hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-            MessageBox(NULL, buffer, "Assertion Failed", MB_ICONEXCLAMATION | MB_OK);
     		SetConsoleTextAttribute(hConsole, WINDOWS_COLOR_RED);
     		printf("[ASSERT ERROR]: %s\n", buffer);
     		SetConsoleTextAttribute(hConsole, WINDOWS_COLOR_RESET);
+            MessageBox(NULL, buffer, "Assertion Failed", MB_ICONEXCLAMATION | MB_OK);
         } else {
         	printf("%s[ASSERT ERROR]: %s%s\n", ANSI_COLOR_RED, buffer, ANSI_COLOR_RESET);
 
         }
 
+    }
+}
+
+inline void WriteWarning_(const char* message, const char* data = NULL ...){
+    char buffer[BUFFER_SIZE];
+    sprintf(buffer, message, data);
+
+    if(winapi){
+        HANDLE  hConsole;
+        hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        SetConsoleTextAttribute(hConsole, WINDOWS_COLOR_YELLOW);
+        printf("[WARNING]: %s\n", buffer);
+        SetConsoleTextAttribute(hConsole, WINDOWS_COLOR_RESET);
+    } else {
+        printf("%s[WARNING]: %s%s\n", ANSI_COLOR_YELLOW, buffer, ANSI_COLOR_RESET);
     }
 }
