@@ -22,9 +22,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(HPP)
 $(TARGET): $(OBJ)
 	$(CC) -static $(CFLAGS) -o $@ $^ $(LFLAGS)
 
-# Fuck
-test:
-	$(CC) -static $(CFLAGS) -o $@ $^$(LFLAGS)
+debug:
+	$(CC) -static $(CFLAGS) -g -o $@ $^$(LFLAGS)
 
 clean:
 	del $(OBJDIR)\*.o

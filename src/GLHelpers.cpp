@@ -37,4 +37,15 @@ bool GLHelperInitialize(){
     return result;
 }
 
+//####################################################################################################################################
+// Proxy function setup
+//####################################################################################################################################
+void GenerateBuffers(int number, unsigned int* buffer){
+    if(glGenBuffers){
+        glGenBuffers(number, buffer);
+    } else {
+        WriteWarning_("Trying to use GenerateBuffers (glGenBuffers).");
+    }
+}
+
 } // namespace GLHelper

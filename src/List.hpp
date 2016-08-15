@@ -14,7 +14,7 @@ public:
 
     ~List<T>(){
         for(int i; i < max; i++){
-            free(memory[i]);
+            delete memory[i];
             memory[i] = NULL;
         }
 

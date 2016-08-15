@@ -16,11 +16,6 @@ Game::Game(){
 
 }
 
-Game::~Game(){
-    delete renderer;
-    renderer = NULL;
-}
-
 void Game::Start(){
     Run();
 }

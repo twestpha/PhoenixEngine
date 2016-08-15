@@ -55,7 +55,7 @@ MaterialComponentSystem::MaterialComponentSystem(){
     data.instanceBuffer = Allocator::Allocate(0);
 
     unsigned int testBufferPointer;
-    // GLHelper::glGenBuffers(1, &testBufferPointer);
+    GLHelper::GenerateBuffers(1, &testBufferPointer);
     printf("Test Buffer Pointer: %d\n", testBufferPointer);
     // glBindBuffer
     // glBufferData

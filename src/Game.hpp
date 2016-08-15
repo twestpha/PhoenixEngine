@@ -17,7 +17,6 @@ public:
     };
 
     Game();
-    ~Game();
 
     void Start();
     void Run();
