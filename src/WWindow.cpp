@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "GLHelpers.hpp"
 #include "WWindow.hpp"
 #include "Assert.hpp"
 #include "Time.hpp"
@@ -152,14 +153,16 @@ WWindow::WWindow(int x, int y, int width, int height, const char* title){
     	free(logPalette);
     }
 
+    hardwareGLRenderContext = wglCreateContext(hardwareDeviceContext);
+    wglMakeCurrent(hardwareDeviceContext, hardwareGLRenderContext);
+    Assert_(GLHelper::GLHelperInitialize(), "Error initializing GL Helper library.");
+    printf("GL Version: %s\n", glGetString(GL_VERSION));
+
     ReleaseDC(windowHandle, hardwareDeviceContext);
 }
 
 void WWindow::Start(){
     if(windowHandle){
-        hardwareGLRenderContext = wglCreateContext(hardwareDeviceContext);
-        wglMakeCurrent(hardwareDeviceContext, hardwareGLRenderContext);
-
         ShowWindow(windowHandle, nCmdShow);
 
         while(GetMessage(&windowMessage, windowHandle, 0, 0) > 0){

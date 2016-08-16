@@ -10,8 +10,6 @@ Renderer::Renderer(){
     maxDrawTime = 0.0f;
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-
-    Assert_(GLHelper::GLHelperInitialize(), "Error initializing GL Helper library.");
 }
 
 void Renderer::Draw(Game* game){

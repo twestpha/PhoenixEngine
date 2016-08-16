@@ -25,14 +25,10 @@ void* wglGetAnyProcAddress(const char* name){
 // Initialization
 //####################################################################################################################################
 bool GLHelperInitialize(){
-    printf("Initializing GL version %s\n", glGetString(GL_VERSION));
     bool result = false;
 
     glGenBuffers = (PFNGLGENBUFFERSPROC)GLHelperGetProcAddress("glGenBuffers");
     result = result || (glGenBuffers != NULL);
-    Assert_(glGenBuffers, "glGenBuffers Failed to Initialize.");
-
-    printf("%p\n", glGenBuffers);
 
     return result;
 }
@@ -44,7 +40,7 @@ void GenerateBuffers(int number, unsigned int* buffer){
     if(glGenBuffers){
         glGenBuffers(number, buffer);
     } else {
-        WriteWarning_("Trying to use GenerateBuffers (glGenBuffers).");
+        WriteWarning_("Trying to use GenerateBuffers (glGenBuffers), but function pointer is NULL.");
     }
 }
 
