@@ -5,7 +5,7 @@ namespace GLHelper {
 //####################################################################################################################################
 // Namespace function declarations
 //####################################################################################################################################
-PFNGLGENBUFFERSPROC glGenBuffers = NULL;
+GenerateBuffersFunctionPointer GenerateBuffers = NULL;
 
 //####################################################################################################################################
 // Get Proc Setup
@@ -27,21 +27,10 @@ void* wglGetAnyProcAddress(const char* name){
 bool GLHelperInitialize(){
     bool result = false;
 
-    glGenBuffers = (PFNGLGENBUFFERSPROC)GLHelperGetProcAddress("glGenBuffers");
-    result = result || (glGenBuffers != NULL);
+    GenerateBuffers = (GenerateBuffersFunctionPointer)GLHelperGetProcAddress("glGenBuffers");
+    result = result || (GenerateBuffers != NULL);
 
     return result;
-}
-
-//####################################################################################################################################
-// Proxy function setup
-//####################################################################################################################################
-void GenerateBuffers(int number, unsigned int* buffer){
-    if(glGenBuffers){
-        glGenBuffers(number, buffer);
-    } else {
-        WriteWarning_("Trying to use GenerateBuffers (glGenBuffers), but function pointer is NULL.");
-    }
 }
 
 } // namespace GLHelper
