@@ -43,6 +43,10 @@ MaterialComponentSystem::MaterialComponentSystem(){
     data.allocatedInstances = 0;
     data.instanceBuffer = Allocator::Allocate(0);
 
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // https://open.gl/drawing
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     // This really should be per-material, but fuck it for now
     // unsigned int colorbuffer;
     // GLHelper::glGenBuffers(1, &colorbuffer);
