@@ -1,6 +1,9 @@
 #ifndef MATERIAL_COMPONENT_SYSTEM_H
 #define MATERIAL_COMPONENT_SYSTEM_H
 
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <map>
 
 #include "Actor.hpp"
@@ -26,6 +29,9 @@ struct MaterialComponentData {
 };
 
 class MaterialComponentSystem {
+private:
+    static GLint vertexShader;
+    static GLint fragmentShader;
 public:
     MaterialComponentSystem();
     void Allocate(unsigned int size);

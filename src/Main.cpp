@@ -25,7 +25,6 @@ int TMain(){
     //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
     // }
 
-    printf("-- Phoenix Engine --\n");
 
     Game *game = new Game();
     std::thread gameThread(Game::Start, game);
@@ -43,6 +42,7 @@ int TMain(){
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow){
+    printf("-- Phoenix Engine --\n");
     WWindow::Instance()->hInstance     = hInstance;
     WWindow::Instance()->hPrevInstance = hPrevInstance;
     WWindow::Instance()->lpCmdLine     = lpCmdLine;

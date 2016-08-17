@@ -5,7 +5,17 @@ namespace GLHelper {
 //####################################################################################################################################
 // Namespace function declarations
 //####################################################################################################################################
-GenerateBuffersFunctionPointer GenerateBuffers = NULL;
+// Buffer Operations
+PFNGLGENBUFFERSPROC glGenBuffers = NULL;
+PFNGLBINDBUFFERARBPROC glBindBuffers = NULL;
+PFNGLBUFFERDATAARBPROC glBufferData = NULL;
+
+// Shader Operations
+PFNGLCREATESHADERPROC glCreateShader = NULL;
+PFNGLSHADERSOURCEPROC glShaderSource = NULL;
+PFNGLCOMPILESHADERPROC glCompileShader = NULL;
+PFNGLGETSHADERIVPROC glGetShaderiv = NULL;
+PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = NULL;
 
 //####################################################################################################################################
 // Get Proc Setup
@@ -25,12 +35,21 @@ void* wglGetAnyProcAddress(const char* name){
 // Initialization
 //####################################################################################################################################
 bool GLHelperInitialize(){
-    bool result = false;
+    // Buffer Operations
+    glGenBuffers = (PFNGLGENBUFFERSPROC)GLHelperGetProcAddress("glGenBuffers");
+    glBindBuffers = (PFNGLBINDBUFFERARBPROC)GLHelperGetProcAddress("glBindBufferARB");
+    glBufferData = (PFNGLBUFFERDATAARBPROC)GLHelperGetProcAddress("glBufferDataARB");
+    bool bufferOperationResult = glGenBuffers && glBindBuffers && glBufferData;
 
-    GenerateBuffers = (GenerateBuffersFunctionPointer)GLHelperGetProcAddress("glGenBuffers");
-    result = result || (GenerateBuffers != NULL);
+    // Shader Operations
+    glCreateShader = (PFNGLCREATESHADERPROC)GLHelperGetProcAddress("glCreateShader");
+    glShaderSource = (PFNGLSHADERSOURCEPROC)GLHelperGetProcAddress("glShaderSource");
+    glCompileShader = (PFNGLCOMPILESHADERPROC)GLHelperGetProcAddress("glCompileShader");
+    glGetShaderiv = (PFNGLGETSHADERIVPROC)GLHelperGetProcAddress("glGetShaderiv");
+    glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)GLHelperGetProcAddress("glGetShaderInfoLog");
+    bool shaderOperationResult = glCreateShader && glShaderSource && glCompileShader && glGetShaderiv && glGetShaderInfoLog;
 
-    return result;
+    return bufferOperationResult && shaderOperationResult;
 }
 
 } // namespace GLHelper

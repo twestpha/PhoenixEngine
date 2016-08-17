@@ -42,12 +42,32 @@ void* wglGetAnyProcAddress(const char *name);
 //####################################################################################################################################
 // Function Type definitions
 //####################################################################################################################################
-typedef void (GLAPIENTRY* GenerateBuffersFunctionPointer)(int number, unsigned int* buffer);
+// Buffer Operations
+typedef void (GLAPIENTRY* PFNGLGENBUFFERSPROC)(int number, unsigned int* buffer);
+typedef void (GLAPIENTRY* PFNGLBINDBUFFERARBPROC)(GLenum target, unsigned int buffer);
+typedef void (GLAPIENTRY* PFNGLBUFFERDATAARBPROC)(GLenum target, unsigned int size, const void *data, GLenum usage);
+
+// Shader Operations
+typedef GLuint (GLAPIENTRY * PFNGLCREATESHADERPROC)(GLenum type);
+typedef void (GLAPIENTRY * PFNGLSHADERSOURCEPROC)(GLuint shader, unsigned int count, const char *const* string, const int* length);
+typedef void (GLAPIENTRY * PFNGLCOMPILESHADERPROC)(GLuint shader);
+typedef void (GLAPIENTRY * PFNGLGETSHADERIVPROC)(GLuint shader, GLenum pname, int* parameter);
+typedef void (GLAPIENTRY * PFNGLGETSHADERINFOLOGPROC)(GLuint shader, unsigned int bufferSize, unsigned int* length, char* infoLog);
 
 //####################################################################################################################################
 // Namespace function declarations
 //####################################################################################################################################
-extern GenerateBuffersFunctionPointer GenerateBuffers;
+// Buffer Operations
+extern PFNGLGENBUFFERSPROC glGenBuffers;
+extern PFNGLBINDBUFFERARBPROC glBindBuffers;
+extern PFNGLBUFFERDATAARBPROC glBufferData;
+
+// Shader Operations
+extern PFNGLCREATESHADERPROC glCreateShader;
+extern PFNGLSHADERSOURCEPROC glShaderSource;
+extern PFNGLCOMPILESHADERPROC glCompileShader;
+extern PFNGLGETSHADERIVPROC glGetShaderiv;
+extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
 
 //####################################################################################################################################
 // Initialization

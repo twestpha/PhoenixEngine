@@ -7,6 +7,9 @@
 #include "Actor.hpp"
 #include "Model.hpp"
 
+// TODO Implement Static Models
+// https://open.gl/drawing
+
 // Forward declarations
 class Level;
 
