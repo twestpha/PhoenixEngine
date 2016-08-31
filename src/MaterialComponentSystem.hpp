@@ -7,6 +7,7 @@
 #include <map>
 
 #include "Actor.hpp"
+#include "ShaderProgram.hpp"
 
 // Forward declarations
 class Level;
@@ -26,12 +27,13 @@ struct MaterialComponentData {
 
     Actor* actor;
     // Arrays of data
+    // Honestly, it's going to be a bunch of pointers
+    // probably the shader program to use
+    // also various textures
+    // should the textures be fixed...? Probably not, but it's quite tempting
 };
 
 class MaterialComponentSystem {
-private:
-    static GLint vertexShader;
-    static GLint fragmentShader;
 public:
     MaterialComponentSystem();
     void Allocate(unsigned int size);
@@ -49,6 +51,8 @@ public:
 private:
     MaterialComponentData data;
     std::map<unsigned int, unsigned int> map;
+
+    ShaderProgram shaderProgram; // TODO is this the best way to do this...? Probably should be per-material...
 };
 
 #endif

@@ -9,40 +9,18 @@
 #include "Level.hpp"
 #include "Time.hpp"
 
-// TODO Holy shit tech debt
+// TODO yeah remove this temp shit later
 float pixels[] = {
     0.0f, 0.0f, 0.0f,   1.0f, 1.0f, 1.0f,
     1.0f, 1.0f, 1.0f,   0.0f, 0.0f, 0.0f
 };
-
-const char* RAW_VERTEX_SHADER = "\
-in vec2 position;\
-\
-void main()\
-{\
-    gl_Position = vec4(position, 0.0, 1.0);\
-}\
-";
-
-const char* RAW_FRAGMENT_SHADER = "\
-#version 150\
-\
-out vec4 outColor;\
-\
-void main()\
-{\
-    outColor = vec4(1.0, 1.0, 1.0, 1.0);\
-}\
-";
-
-GLint MaterialComponentSystem::vertexShader = 0;
-GLint MaterialComponentSystem::fragmentShader = 0;
 
 MaterialComponentSystem::MaterialComponentSystem(){
     data.usedInstances = 0;
     data.allocatedInstances = 0;
     data.instanceBuffer = Allocator::Allocate(0);
 
+    shaderProgram.InitializeFromData(/* TODO Fetch data from resource*/);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // https://open.gl/drawing
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -58,34 +36,7 @@ MaterialComponentSystem::MaterialComponentSystem(){
     // glBindTexture(GL_TEXTURE_2D, texture);
     //
     // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_FLOAT, pixels);
-    vertexShader = GLHelper::glCreateShader(GL_VERTEX_SHADER);
-    GLHelper::glShaderSource(vertexShader, 1, &RAW_VERTEX_SHADER, NULL);
-    GLHelper::glCompileShader(vertexShader);
 
-    fragmentShader = GLHelper::glCreateShader(GL_FRAGMENT_SHADER);
-    GLHelper::glShaderSource(fragmentShader, 1, &RAW_FRAGMENT_SHADER, NULL);
-    GLHelper::glCompileShader(fragmentShader);
-    // GLint status;
-    // GLHelper::glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
-    // char buffer[512];
-    // GLHelper::glGetShaderInfoLog(vertexShader, 512, NULL, buffer);
-    // printf("%s\n", buffer);
-
-    // GLuint shaderProgram = glCreateProgram();
-    // glAttachShader(shaderProgram, vertexShader);
-    // glAttachShader(shaderProgram, fragmentShader);
-
-    // Not sure...
-    // glBindFragDataLocation(shaderProgram, 0, "outColor");
-
-    // glLinkProgram(shaderProgram);
-
-    // PUT THIS IN WHERE YOU USE IT
-    // glUseProgram(shaderProgram);
-
-    // USING attributes in shaders
-    // GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-    // glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
 void MaterialComponentSystem::Allocate(unsigned int size){

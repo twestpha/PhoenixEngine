@@ -4,8 +4,8 @@
 class Resource {
 public:
     Resource(){}
-private:
-    // something, surely
+protected:
+    void* data;
 };
 
 #endif

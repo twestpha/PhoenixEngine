@@ -1,3 +1,5 @@
+#include "CompileOptions.hpp"
+
 #include <thread>
 
 #include "WWindow.hpp"

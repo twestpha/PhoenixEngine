@@ -7,9 +7,9 @@
 #include "Actor.hpp"
 #include "Model.hpp"
 
-// TODO Implement Static (IN rendering pipeline) Models
+// TODO Implement Static (In rendering pipeline) Models
 // https://open.gl/drawing
-// TODO Also implement VBO's (Vertex Buffer Objects)
+// TODO Also implement VBO's (Vertex Buffer Objects) because that serialization fast
 
 // Forward declarations
 class Level;

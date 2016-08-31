@@ -3,7 +3,7 @@
 #include "ResourceManager.hpp"
 #include "Time.hpp"
 
-const int COMPONENT_MAXIMUM_PER_LEVEL = 1024;
+#define COMPONENT_MAXIMUM_PER_LEVEL 1024
 
 Level::Level(){
 }
