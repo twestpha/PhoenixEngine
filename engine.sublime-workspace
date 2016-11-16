@@ -14,6 +14,15 @@
 				"buffer_size": 1072692,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"contents": "\"http://us.battle.net/heroes/en/blog/16353767/developer-insights-azmodan-tells-all-10-15-2014\nhttps://www.youtube.com/watch?v=jy59LVCmz5k&feature=youtu.be\nhttps://boards.fireden.net/vg/search/username/Axolotl/\"",
+			"settings":
+			{
+				"buffer_size": 210,
+				"line_ending": "Windows",
+				"name": "\"http://us.battle.net/heroes/en/blog/16353767/deve"
+			}
 		}
 	],
 	"build_system": "",
@@ -204,7 +213,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -232,6 +241,34 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 146205.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 210,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								210
+							]
+						],
+						"settings":
+						{
+							"auto_name": "\"http://us.battle.net/heroes/en/blog/16353767/deve",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
