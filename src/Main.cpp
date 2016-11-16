@@ -6,9 +6,14 @@
 #include "Game.hpp"
 #include "List.hpp"
 
+// REMOVE IN A SEC
+#include "Symbol.hpp"
+
 bool winapi;
 
 int TMain(){
+
+    symbol test1 = "SHIT_DICKS";
 
     // Arguments
     // LPWSTR *szArgList;
