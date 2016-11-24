@@ -3,9 +3,13 @@
 #include <stdio.h>
 
 #define MAX_SYMBOL_LENGTH 10
+#define BITS_PER_SYMBOL 64
 #define BITS_PER_CHARACTER 6
 #define INVALID_CHARACTER -1
 #define INVALID_SYMBOL unsigned(-1)
+#define END_SYMBOL 37
+#define CLEAR_SYMBOL 0
+#define SIX_BIT_MASK 0x3F
 
 int symbol::char_to_symbol_table[] = {
     // 0
@@ -183,7 +187,8 @@ char symbol::symbol_to_char_table[] = {
     'X',
     'Y',
     'Z',
-    '_'
+    '_',
+    '\0'
 };
 
 symbol::symbol(){
@@ -191,10 +196,12 @@ symbol::symbol(){
 }
 
 symbol::symbol(const char* string){
-    data = INVALID_SYMBOL;
+    data = CLEAR_SYMBOL;
     // 37 is the special ENDMSG character, unless the string is ten chars long already
-    for(int i(0); string[i] != NULL && i < MAX_SYMBOL_LENGTH; ++i){
-        int symbolCharacter = char_to_symbol_table[string[i]];
+    int i;
+
+    for(i = 0; string[i] != '\0' && i < MAX_SYMBOL_LENGTH; ++i){
+        long64 symbolCharacter = char_to_symbol_table[string[i]];
 
         if(symbolCharacter == INVALID_CHARACTER){
             Assert_(false, "Invalid character in symbol constructor.");
@@ -202,15 +209,36 @@ symbol::symbol(const char* string){
             return;
         }
 
-        data = data & (symbolCharacter << (i * BITS_PER_CHARACTER));
+        data = data | (symbolCharacter << (i * BITS_PER_CHARACTER));
+    }
 
-        // printf("Character %c -> %d -> %c\n", string[i], symbolCharacter, symbol_to_char_table[symbolCharacter]);
+    if(i < MAX_SYMBOL_LENGTH){
+        data = data | (long64(END_SYMBOL) << (i * BITS_PER_CHARACTER));
     }
 }
 
 bool symbol::Valid(){
-    return data != INVALID_SYMBOL;
+    return data != END_SYMBOL && data != INVALID_SYMBOL && data != CLEAR_SYMBOL;
 }
+
+void symbol::Print(){
+    for(int i(0); i < BITS_PER_SYMBOL/BITS_PER_CHARACTER; ++i){
+        int symbolCharacter = (data >> (i * BITS_PER_CHARACTER)) & SIX_BIT_MASK;
+        if(symbolCharacter != END_SYMBOL){
+            printf("%c", symbol_to_char_table[symbolCharacter]);
+        } else {
+            break;
+        }
+    }
+
+    printf("\n");
+}
+
+
+bool symbol::operator=(const symbol& other){
+    data = other.data;
+}
+
 
 bool symbol::operator==(const symbol& other){
     return data == other.data;

@@ -13,7 +13,10 @@ bool winapi;
 
 int TMain(){
 
-    symbol test1 = "SHIT_DICKS";
+    symbol test1 = "TESTSYMBOL";
+    symbol test2 = "TEST2";
+    test1.Print();
+    test2.Print();
 
     // Arguments
     // LPWSTR *szArgList;
