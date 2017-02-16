@@ -14,17 +14,19 @@ void Level::Initialize(){
 
     transformComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
     modelComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
+    materialComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
 
     transformComponentSystem.level = this;
     modelComponentSystem.level = this;
 
     // Test model
     Model* model = new Model();
-    ResourceManager::Instance()->loadModelFromFile("cube.phx", model);
+    ResourceManager::Instance()->loadModelFromFile("complex.phx", model);
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 
     transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -6.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f));
+    materialComponentSystem.Initialize(testActor);
     modelComponentSystem.Initialize(testActor, *model);
 }
 

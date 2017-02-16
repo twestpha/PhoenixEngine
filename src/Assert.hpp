@@ -38,9 +38,7 @@ inline void Assert_(bool condition, const char* message, const char* data = NULL
             MessageBox(NULL, buffer, "Assertion Failed", MB_ICONEXCLAMATION | MB_OK);
         } else {
         	printf("%s[ASSERT ERROR]: %s%s\n", ANSI_COLOR_RED, buffer, ANSI_COLOR_RESET);
-
         }
-
     }
 }
 

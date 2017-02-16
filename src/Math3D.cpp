@@ -14,7 +14,7 @@ float TInverseSqrt(float x){
     return x;
 }
 
-float TFastSqrt(float x){
+float TFastSqrt(float x){ // Probably stupidly more expensive...?
     return 1.0f/TInverseSqrt(x);
 }
 

@@ -7,7 +7,7 @@
 
 enum ShaderType {
     VertexShaderType = GL_VERTEX_SHADER,
-     FragmentShaderType = GL_FRAGMENT_SHADER
+    FragmentShaderType = GL_FRAGMENT_SHADER
 };
 
 class Shader : public Resource {

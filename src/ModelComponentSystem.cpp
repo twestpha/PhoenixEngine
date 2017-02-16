@@ -44,6 +44,7 @@ void ModelComponentSystem::Initialize(Actor actor, Model model){
 
     // Requirements
     Assert_(level->transformComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have transform component.", actor.String());
+    Assert_(level->materialComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have material component.", actor.String());
 
     map[actor.id] = instance.index;
 }
@@ -70,6 +71,36 @@ void ModelComponentSystem::DestroyInstance(unsigned int index){
 }
 
 void ModelComponentSystem::Draw(Actor actor){
+    // TODO Change to use vertex buffer objects (VBO's)
+
+    // Need reference to vertex memory
+    // GLuint vbo;
+    // glGenBuffers(1, &vbo);
+    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // Note static draw                                          ^
+    // Also can use:
+    // GL_STATIC_DRAW
+    // GL_DYNAMIC_DRAW
+    // GL_STREAM_DRAW
+
+    // From c2_triangle
+    // GLuint vao; // Do we need VAO's? What do these do?
+    // glGenVertexArrays(1, &vao);
+    // glBindVertexArray(vao);
+
+    // GLuint vbo;
+    // glGenBuffers(1, &vbo);
+    //
+    // GLfloat vertices[] = {
+    //      0.0f,  0.5f,
+    //      0.5f, -0.5f,
+    //     -0.5f, -0.5f
+    // };
+    //
+    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
     ModelComponentInstance instance = map[actor.id];
     Model model = data.model[instance.index];
     Vertex* vertices = model.GetData();

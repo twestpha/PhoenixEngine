@@ -13,11 +13,6 @@ bool winapi;
 
 int TMain(){
 
-    symbol test1 = "TESTSYMBOL";
-    symbol test2 = "TEST2";
-    test1.Print();
-    test2.Print();
-
     // Arguments
     // LPWSTR *szArgList;
     // int argCount;
@@ -35,7 +30,6 @@ int TMain(){
     //      MessageBox(NULL, szArgList[i], L"Arglist contents", MB_OK);
     // }
 
-
     Game *game = new Game();
     std::thread gameThread(Game::Start, game);
 
@@ -44,6 +38,8 @@ int TMain(){
         WWindow::Instance()->Start();
     } else {
         // Linux window implementation goes here :D
+        // LWindow::Instance()->game = game;
+        // LWindow::Instance()->Start();
     }
 
     gameThread.join();

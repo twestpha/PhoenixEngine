@@ -1,5 +1,7 @@
 #include "ShaderProgram.hpp"
 
+using namespace GLHelper;
+
 // TODO Holy shit tech debt
 const char* RAW_VERTEX_SHADER = "\
 in vec2 position;\
@@ -37,21 +39,21 @@ void Shader::InitializeFromData(void* data, ShaderType type){
     this->data = data;
     this->type = type;
 
-    shaderRef = GLHelper::glCreateShader(type);
-    GLHelper::glShaderSource(shaderRef, SHADER_COUNT, GetShaderSource(), SHADER_LENGTH);
-    GLHelper::glCompileShader(shaderRef);
+    shaderRef = glCreateShader(type);
+    glShaderSource(shaderRef, SHADER_COUNT, GetShaderSource(), SHADER_LENGTH);
+    glCompileShader(shaderRef);
 
     GLint compiled = GL_FALSE;
-    GLHelper::glGetShaderiv(shaderRef, GL_COMPILE_STATUS, &compiled);
+    glGetShaderiv(shaderRef, GL_COMPILE_STATUS, &compiled);
 
     if(compiled == GL_FALSE){
         char message[SHADER_ERROR_LENGTH];
-        GLHelper::glGetShaderInfoLog(shaderRef, SHADER_ERROR_LENGTH, NULL, message);
-        const char* typeErrorPrint = type == VertexShaderType ? vertexErrorPrint : fragmentErrorPrint;
+        glGetShaderInfoLog(shaderRef, SHADER_ERROR_LENGTH, NULL, message);
+        const char* typeErrorPrint = (type == VertexShaderType) ? vertexErrorPrint : fragmentErrorPrint;
         Assert_(false, "%s Shader failed to compile with message:\n%s", typeErrorPrint, message);
     }
 
-    // TODO Enable after data is mutable and not a const char*
+    // TODO Enable after data is mutable and not a void*
     // Allocator::Deallocate(data);
 }
 
@@ -68,26 +70,30 @@ ShaderProgram::ShaderProgram(){
 }
 
 void ShaderProgram::InitializeFromData(/*void* data*/){
+
     vertexShader.InitializeFromData((void*) &RAW_VERTEX_SHADER, VertexShaderType);
     fragmentShader.InitializeFromData((void*) &RAW_FRAGMENT_SHADER, FragmentShaderType);
 
-    // shaderProgramRef = glCreateProgram();
-    // glAttachShader(shaderProgram, vertexShader);
-    // glAttachShader(shaderProgram, fragmentShader);
+    // attach vertex and fragment shaders
+    shaderProgramRef = glCreateProgram();
+    glAttachShader(shaderProgramRef, vertexShader.GetShaderRef());
+    glAttachShader(shaderProgramRef, fragmentShader.GetShaderRef());
 
-    // Not sure...
-    // glBindFragDataLocation(shaderProgram, 0, "outColor");
+    // bind fragment data location
+    glBindFragDataLocation(shaderProgramRef, 0, "outColor");
 
+    printf("Seems like the shader program has been attached!\n");
+
+    // Link the vertex and fragment shader into a shader program
     // glLinkProgram(shaderProgram);
-
-    // PUT THIS IN WHERE YOU USE IT
     // glUseProgram(shaderProgram);
 
-    // USING attributes in shaders
+    // Specify the layout of the vertex data
     // GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+    // glEnableVertexAttribArray(posAttrib);
     // glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
 void ShaderProgram::Apply(){
-
+    // glUseProgram(shaderProgram);
 }

@@ -1,5 +1,12 @@
 #include "Actor.hpp"
 
+char Actor::printbuffer[PRINT_BUFFER_SIZE];
+
+char* Actor::String(){
+    sprintf(printbuffer, "%d:%d", index(), generation());
+    return printbuffer;
+}
+
 ActorManager::ActorManager(){
     for(int i(0); i < MINIMUM_FREE_INDICES; i++){
         freeIndices.Add(i);

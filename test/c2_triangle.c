@@ -106,7 +106,7 @@ int main()
     glDeleteBuffers(1, &vbo);
 
     glDeleteVertexArrays(1, &vao);
-    
+
     window.close();
 
     return 0;

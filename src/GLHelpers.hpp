@@ -48,11 +48,16 @@ typedef void (GLAPIENTRY* PFNGLBINDBUFFERARBPROC)(GLenum target, unsigned int bu
 typedef void (GLAPIENTRY* PFNGLBUFFERDATAARBPROC)(GLenum target, unsigned int size, const void *data, GLenum usage);
 
 // Shader Operations
-typedef GLuint (GLAPIENTRY * PFNGLCREATESHADERPROC)(GLenum type);
-typedef void (GLAPIENTRY * PFNGLSHADERSOURCEPROC)(GLuint shader, unsigned int count, const char *const* string, const int* length);
-typedef void (GLAPIENTRY * PFNGLCOMPILESHADERPROC)(GLuint shader);
-typedef void (GLAPIENTRY * PFNGLGETSHADERIVPROC)(GLuint shader, GLenum pname, int* parameter);
-typedef void (GLAPIENTRY * PFNGLGETSHADERINFOLOGPROC)(GLuint shader, unsigned int bufferSize, unsigned int* length, char* infoLog);
+typedef GLuint (GLAPIENTRY* PFNGLCREATESHADERPROC)(GLenum type);
+typedef void (GLAPIENTRY* PFNGLSHADERSOURCEPROC)(GLuint shader, unsigned int count, const char *const* string, const int* length);
+typedef void (GLAPIENTRY* PFNGLCOMPILESHADERPROC)(GLuint shader);
+typedef void (GLAPIENTRY* PFNGLGETSHADERIVPROC)(GLuint shader, GLenum pname, int* parameter);
+typedef void (GLAPIENTRY* PFNGLGETSHADERINFOLOGPROC)(GLuint shader, unsigned int bufferSize, unsigned int* length, char* infoLog);
+
+// Shader Program Operations
+typedef GLuint (GLAPIENTRY* PFNGLCREATEPROGRAMPROC)(void);
+typedef void (GLAPIENTRY* PFNGLGETATTACHEDSHADERSPROC)(GLuint program, GLsizei maxCount, GLsizei* count, GLuint* shaders);
+typedef void (GLAPIENTRY* PFNGLBINDFRAGDATALOCATIONPROC)(GLuint program, GLuint colorNumber, const GLchar* name);
 
 //####################################################################################################################################
 // Namespace function declarations
@@ -68,6 +73,11 @@ extern PFNGLSHADERSOURCEPROC glShaderSource;
 extern PFNGLCOMPILESHADERPROC glCompileShader;
 extern PFNGLGETSHADERIVPROC glGetShaderiv;
 extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
+
+// Shader Program Operations
+extern PFNGLCREATEPROGRAMPROC glCreateProgram;
+extern PFNGLATTACHSHADERPROC glAttachShader;
+extern PFNGLBINDFRAGDATALOCATIONPROC glBindFragDataLocation;
 
 //####################################################################################################################################
 // Initialization

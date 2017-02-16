@@ -13,7 +13,12 @@ const unsigned ACTOR_GENERATION_MASK = (1<<ACTOR_GENERATION_BITS)-1;
 
 const unsigned MINIMUM_FREE_INDICES = 1024;
 
+const unsigned PRINT_BUFFER_SIZE = 32;
+
 struct Actor {
+
+    static char printbuffer[PRINT_BUFFER_SIZE];
+
     unsigned id;
 
     unsigned index() const {return id & ACTOR_INDEX_MASK;}
@@ -27,9 +32,7 @@ struct Actor {
         this->id = (index << ACTOR_INDEX_BITS) | (generation & ACTOR_GENERATION_MASK);
     }
 
-    const char* String(){
-        return "NOT IMPLEMENTED YET";
-    }
+    char* String();
 };
 
 class ActorManager {

@@ -17,6 +17,11 @@ PFNGLCOMPILESHADERPROC glCompileShader = NULL;
 PFNGLGETSHADERIVPROC glGetShaderiv = NULL;
 PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = NULL;
 
+// Shader Program Operations
+PFNGLCREATEPROGRAMPROC glCreateProgram = NULL;
+PFNGLATTACHSHADERPROC glAttachShader = NULL;
+PFNGLBINDFRAGDATALOCATIONPROC glBindFragDataLocation = NULL;
+
 //####################################################################################################################################
 // Get Proc Setup
 //####################################################################################################################################
@@ -49,7 +54,13 @@ bool GLHelperInitialize(){
     glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)GLHelperGetProcAddress("glGetShaderInfoLog");
     bool shaderOperationResult = glCreateShader && glShaderSource && glCompileShader && glGetShaderiv && glGetShaderInfoLog;
 
-    return bufferOperationResult && shaderOperationResult;
+    // Shader Program Operations
+    glCreateProgram = (PFNGLCREATEPROGRAMPROC)GLHelperGetProcAddress("glCreateProgram");
+    glAttachShader = (PFNGLATTACHSHADERPROC)GLHelperGetProcAddress("glAttachShader");
+    glBindFragDataLocation = (PFNGLBINDFRAGDATALOCATIONPROC)GLHelperGetProcAddress("glBindFragDataLocation");
+    bool shaderProgramOperationResult = glCreateProgram && glAttachShader && glBindFragDataLocation;
+
+    return bufferOperationResult && shaderOperationResult && shaderProgramOperationResult;
 }
 
 } // namespace GLHelper
