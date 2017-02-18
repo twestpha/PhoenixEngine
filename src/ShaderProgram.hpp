@@ -27,6 +27,7 @@ public:
     ShaderProgram();
 
     void InitializeFromData(/*void* data*/);
+    void BindAttribute(ShaderType type, const char* attributename);
 
     void Apply();
 private:

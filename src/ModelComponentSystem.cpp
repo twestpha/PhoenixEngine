@@ -106,6 +106,8 @@ void ModelComponentSystem::Draw(Actor actor){
     Vertex* vertices = model.GetData();
     int vertexCount = model.vertexCount;
 
+    level->materialComponentSystem.ApplyMaterial(actor);
+
     glBegin(GL_TRIANGLES);
         for(int i(0); i < vertexCount; ++i){
             Vertex vertex = vertices[i];

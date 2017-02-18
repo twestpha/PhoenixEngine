@@ -58,6 +58,8 @@ typedef void (GLAPIENTRY* PFNGLGETSHADERINFOLOGPROC)(GLuint shader, unsigned int
 typedef GLuint (GLAPIENTRY* PFNGLCREATEPROGRAMPROC)(void);
 typedef void (GLAPIENTRY* PFNGLGETATTACHEDSHADERSPROC)(GLuint program, GLsizei maxCount, GLsizei* count, GLuint* shaders);
 typedef void (GLAPIENTRY* PFNGLBINDFRAGDATALOCATIONPROC)(GLuint program, GLuint colorNumber, const GLchar* name);
+typedef void (GLAPIENTRY* PFNGLLINKPROGRAMPROC)(GLuint program);
+typedef void (GLAPIENTRY* PFNGLUSEPROGRAMPROC)(GLuint program);
 
 //####################################################################################################################################
 // Namespace function declarations
@@ -78,6 +80,8 @@ extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
 extern PFNGLCREATEPROGRAMPROC glCreateProgram;
 extern PFNGLATTACHSHADERPROC glAttachShader;
 extern PFNGLBINDFRAGDATALOCATIONPROC glBindFragDataLocation;
+extern PFNGLLINKPROGRAMPROC glLinkProgram;
+extern PFNGLUSEPROGRAMPROC glUseProgram;
 
 //####################################################################################################################################
 // Initialization

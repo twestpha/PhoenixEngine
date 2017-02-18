@@ -94,5 +94,5 @@ void MaterialComponentSystem::DestroyInstance(unsigned int index){
 }
 
 void MaterialComponentSystem::ApplyMaterial(Actor actor){
-    // Nothing yet
+    shaderProgram.Apply();
 }

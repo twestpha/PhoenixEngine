@@ -8,7 +8,7 @@ in vec2 position;\
 \
 void main()\
 {\
-    gl_Position = vec4(position, 0.0, 1.0);\
+    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;\
 }\
 ";
 
@@ -19,7 +19,7 @@ out vec4 outColor;\
 \
 void main()\
 {\
-    outColor = vec4(1.0, 1.0, 1.0, 1.0);\
+    outColor = vec4(1.0, 0.0, 0.0, 1.0);\
 }\
 ";
 
@@ -70,7 +70,6 @@ ShaderProgram::ShaderProgram(){
 }
 
 void ShaderProgram::InitializeFromData(/*void* data*/){
-
     vertexShader.InitializeFromData((void*) &RAW_VERTEX_SHADER, VertexShaderType);
     fragmentShader.InitializeFromData((void*) &RAW_FRAGMENT_SHADER, FragmentShaderType);
 
@@ -82,18 +81,18 @@ void ShaderProgram::InitializeFromData(/*void* data*/){
     // bind fragment data location
     glBindFragDataLocation(shaderProgramRef, 0, "outColor");
 
-    printf("Seems like the shader program has been attached!\n");
-
     // Link the vertex and fragment shader into a shader program
-    // glLinkProgram(shaderProgram);
-    // glUseProgram(shaderProgram);
+    glLinkProgram(shaderProgramRef);
+}
 
+void ShaderProgram::BindAttribute(ShaderType type, const char* attributename) {
     // Specify the layout of the vertex data
     // GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
     // glEnableVertexAttribArray(posAttrib);
     // glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
 }
 
+
 void ShaderProgram::Apply(){
-    // glUseProgram(shaderProgram);
+    glUseProgram(shaderProgramRef);
 }

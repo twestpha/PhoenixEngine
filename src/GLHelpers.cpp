@@ -21,6 +21,8 @@ PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog = NULL;
 PFNGLCREATEPROGRAMPROC glCreateProgram = NULL;
 PFNGLATTACHSHADERPROC glAttachShader = NULL;
 PFNGLBINDFRAGDATALOCATIONPROC glBindFragDataLocation = NULL;
+PFNGLLINKPROGRAMPROC glLinkProgram = NULL;
+PFNGLUSEPROGRAMPROC glUseProgram = NULL;
 
 //####################################################################################################################################
 // Get Proc Setup
@@ -58,7 +60,9 @@ bool GLHelperInitialize(){
     glCreateProgram = (PFNGLCREATEPROGRAMPROC)GLHelperGetProcAddress("glCreateProgram");
     glAttachShader = (PFNGLATTACHSHADERPROC)GLHelperGetProcAddress("glAttachShader");
     glBindFragDataLocation = (PFNGLBINDFRAGDATALOCATIONPROC)GLHelperGetProcAddress("glBindFragDataLocation");
-    bool shaderProgramOperationResult = glCreateProgram && glAttachShader && glBindFragDataLocation;
+    glLinkProgram = (PFNGLLINKPROGRAMPROC)GLHelperGetProcAddress("glLinkProgram");
+    glUseProgram = (PFNGLUSEPROGRAMPROC)GLHelperGetProcAddress("glUseProgram");
+    bool shaderProgramOperationResult = glCreateProgram && glAttachShader && glBindFragDataLocation && glLinkProgram && glUseProgram;
 
     return bufferOperationResult && shaderOperationResult && shaderProgramOperationResult;
 }
