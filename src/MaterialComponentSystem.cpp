@@ -9,6 +9,7 @@
 #include "Level.hpp"
 #include "Time.hpp"
 
+
 // TODO yeah remove this temp shit later
 float pixels[] = {
     0.0f, 0.0f, 0.0f,   1.0f, 1.0f, 1.0f,
@@ -21,6 +22,7 @@ MaterialComponentSystem::MaterialComponentSystem(){
     data.instanceBuffer = Allocator::Allocate(0);
 
     shaderProgram.InitializeFromData(/* TODO Fetch data from resource*/);
+    texture->InitializeFromData(&pixels);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // https://open.gl/drawing
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -19,7 +19,7 @@ out vec4 outColor;\
 \
 void main()\
 {\
-    outColor = vec4(1.0, 0.0, 0.0, 1.0);\
+    outColor = vec4(1.0, 1.0, 1.0, 1.0);\
 }\
 ";
 
@@ -53,7 +53,7 @@ void Shader::InitializeFromData(void* data, ShaderType type){
         Assert_(false, "%s Shader failed to compile with message:\n%s", typeErrorPrint, message);
     }
 
-    // TODO Enable after data is mutable and not a void*
+    // TODO Enable after data is mutable and not a const string
     // Allocator::Deallocate(data);
 }
 

@@ -18,12 +18,16 @@ def getXMLValue(line): # Assumes ONE value per line
 # Generic entry point
 ######################################################################################################
 
-def Build(filename):
-    extension = filename.split(".")[-1]
-    result = 0
+def Build(filelist):
+    for filename in filelist:
+        extension = filename.split(".")[-1]
+        result = 0
 
-    if(extension == "dae"):
-        result += BuildModel(filename)
+        if(extension == "dae"):
+            result += BuildModel(filename)
+        else:
+            print("Uknown asset type %s" % extension)
+            result += 1
 
     if(result == 0):
         print("All assets have finished building successfully.")
@@ -38,7 +42,7 @@ def BuildModel(filename):
     try:
         inputFile = open(RESOURCE_FOLDER + MODEL_FOLDER + filename, 'r')
     except:
-        print("Error opening file %s" % filename)
+        print("Error opening model file %s" % filename)
         return 1
 
     up_axis = 'Y'
@@ -138,7 +142,7 @@ def BuildModel(filename):
     try:
         outputFile = open(OUTPUT_FOLDER + filename.split(".")[0] + DATA_EXTENSION, "wb")
     except:
-        print("Error writing file %s, unable to open file." % (filename.split(".")[0] + DATA_EXTENSION))
+        print("Error writing file %s, unable to open." % (filename.split(".")[0] + DATA_EXTENSION))
         return 1
 
     count = 0
@@ -193,4 +197,7 @@ def BuildModel(filename):
 # Main
 ######################################################################################################
 
-Build(sys.argv[1]);
+try:
+    Build(sys.argv[1:]);
+except:
+    print("Usage:\n\tBuildAsset.py [Asset(s) to build]\n\tExample: BuildAsset.py cube.dae")

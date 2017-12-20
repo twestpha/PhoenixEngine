@@ -15,6 +15,8 @@ const unsigned MINIMUM_FREE_INDICES = 1024;
 
 const unsigned PRINT_BUFFER_SIZE = 32;
 
+const unsigned INVALID_ACTOR = -1;
+
 struct Actor {
 
     static char printbuffer[PRINT_BUFFER_SIZE];
@@ -26,6 +28,10 @@ struct Actor {
 
     bool operator<(const Actor otherActor) const{
         return this->index() < otherActor.index();
+    }
+
+    Actor(){
+        this->id = INVALID_ACTOR;
     }
 
     Actor(unsigned int index, unsigned int generation){

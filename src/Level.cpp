@@ -21,7 +21,7 @@ void Level::Initialize(){
 
     // Test model
     Model* model = new Model();
-    ResourceManager::Instance()->loadModelFromFile("complex.phx", model);
+    ResourceManager::Instance()->loadModelFromFile("cube.phx", model);
 
     ResourceManager::Instance()->Join(); // Close all loading threads running
 

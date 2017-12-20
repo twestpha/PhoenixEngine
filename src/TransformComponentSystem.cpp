@@ -14,7 +14,7 @@ TransformComponentSystem::TransformComponentSystem(){
     data.instanceBuffer = Allocator::Allocate(0);
 }
 
-void TransformComponentSystem::Allocate(unsigned int size){
+void TransformComponentSystem::Allocate(unsigned size){
     Assert_(size > data.usedInstances, "Component system 'TransformComponentSystem' trying to allocate less memory than it's already using\n");
 
     TransformComponentData newData;
@@ -52,7 +52,7 @@ void TransformComponentSystem::Initialize(Actor actor, Vector3 position, Vector3
     map[actor.id] = instance.index;
 }
 
-TransformComponentInstance TransformComponentSystem::MakeInstance(unsigned int index){
+TransformComponentInstance TransformComponentSystem::MakeInstance(unsigned index){
     return TransformComponentInstance(index);
 }
 
@@ -65,8 +65,8 @@ bool TransformComponentSystem::HasComponentForActor(Actor actor){
 }
 
 
-void TransformComponentSystem::DestroyInstance(unsigned int index){
-    unsigned int lastActorIndex = data.usedInstances - 1;
+void TransformComponentSystem::DestroyInstance(unsigned index){
+    unsigned lastActorIndex = data.usedInstances - 1;
     Actor lastActor = data.actor[lastActorIndex];
     Actor actor = data.actor[index];
 
@@ -97,5 +97,4 @@ void TransformComponentSystem::Update(){
     for(int i(0); i < data.usedInstances; ++i){
         data.rotation[i].x += (50.0f * Time::TimeDelta());
     }
-
 }

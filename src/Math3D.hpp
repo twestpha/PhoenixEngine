@@ -14,6 +14,10 @@ float TFastSqrt(float x);
 struct Vector2 {
     float x, y;
 
+    Vector2(){
+        x = y = 0.0f;
+    }
+
     Vector2(float x, float y){
         this->x = x;
         this->y = y;
@@ -34,6 +38,10 @@ struct Vector2 {
 
 struct Vector3 {
     float x, y, z;
+
+    Vector3(){
+        x = y = z = 0.0f;
+    }
 
     Vector3(float x, float y, float z){
         this->x = x;
@@ -56,6 +64,10 @@ struct Vector3 {
 
 struct Vector4 {
     float x, y, z, w;
+
+    Vector4(){
+        x = y = z = w = 0.0f;
+    }
 
     Vector4(float x, float y, float z, float w){
         this->x = x;

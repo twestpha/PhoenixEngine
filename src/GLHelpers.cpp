@@ -24,6 +24,10 @@ PFNGLBINDFRAGDATALOCATIONPROC glBindFragDataLocation = NULL;
 PFNGLLINKPROGRAMPROC glLinkProgram = NULL;
 PFNGLUSEPROGRAMPROC glUseProgram = NULL;
 
+// Texture Operations
+PFNGLGENTEXTURESPROC glGenTextures = NULL;
+PFNGLBINDTEXTURESPROC glBindTexture = NULL;
+
 //####################################################################################################################################
 // Get Proc Setup
 //####################################################################################################################################
@@ -64,7 +68,12 @@ bool GLHelperInitialize(){
     glUseProgram = (PFNGLUSEPROGRAMPROC)GLHelperGetProcAddress("glUseProgram");
     bool shaderProgramOperationResult = glCreateProgram && glAttachShader && glBindFragDataLocation && glLinkProgram && glUseProgram;
 
-    return bufferOperationResult && shaderOperationResult && shaderProgramOperationResult;
+    // Texture Operations
+    glGenTextures = (PFNGLGENTEXTURESPROC)GLHelperGetProcAddress("glGenTextures");
+    glBindTexture = (PFNGLBINDTEXTURESPROC)GLHelperGetProcAddress("glBindTexture");
+    bool textureOperationResult = glGenTextures  && glBindTexture;
+
+    return bufferOperationResult && shaderOperationResult && shaderProgramOperationResult && textureOperationResult;
 }
 
 } // namespace GLHelper

@@ -61,6 +61,11 @@ typedef void (GLAPIENTRY* PFNGLBINDFRAGDATALOCATIONPROC)(GLuint program, GLuint 
 typedef void (GLAPIENTRY* PFNGLLINKPROGRAMPROC)(GLuint program);
 typedef void (GLAPIENTRY* PFNGLUSEPROGRAMPROC)(GLuint program);
 
+// Texture Operations
+typedef void (GLAPIENTRY* PFNGLGENTEXTURESPROC)(GLsizei n, GLuint* textures);
+typedef void (GLAPIENTRY* PFNGLBINDTEXTURESPROC)(GLenum target, GLuint texture);
+
+  // r = ((glBindTextureEXT = (PFNGLBINDTEXTUREEXTPROC)glewGetProcAddress((const GLubyte*)"glBindTextureEXT")) == NULL) || r;
 //####################################################################################################################################
 // Namespace function declarations
 //####################################################################################################################################
@@ -82,6 +87,10 @@ extern PFNGLATTACHSHADERPROC glAttachShader;
 extern PFNGLBINDFRAGDATALOCATIONPROC glBindFragDataLocation;
 extern PFNGLLINKPROGRAMPROC glLinkProgram;
 extern PFNGLUSEPROGRAMPROC glUseProgram;
+
+// Texture Operations
+extern PFNGLGENTEXTURESPROC glGenTextures;
+extern PFNGLBINDTEXTURESPROC glBindTexture;
 
 //####################################################################################################################################
 // Initialization

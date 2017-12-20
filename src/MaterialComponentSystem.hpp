@@ -6,6 +6,7 @@
 #include <GL/glu.h>
 #include <map>
 
+#include "Texture.hpp"
 #include "Actor.hpp"
 #include "ShaderProgram.hpp"
 
@@ -53,6 +54,8 @@ private:
     std::map<unsigned int, unsigned int> map;
 
     ShaderProgram shaderProgram; // TODO is this the best way to do this...? Probably should be per-material...
+    // Also per-material textures but yeah...
+    Texture* texture;
 };
 
 #endif

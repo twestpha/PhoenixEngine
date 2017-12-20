@@ -6,7 +6,11 @@
 #include "Assert.hpp"
 
 const char* DATA_PATH = "data\\";
+
+// Model Data
 const int BYTES_PER_VERTEX = 32; // 4 bytes per entry, 8 entries per vertex
+
+//
 const int FILEPATH_BUFFER_SIZE = 128;
 const int NO_STAT_ERROR = 0;
 

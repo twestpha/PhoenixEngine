@@ -10,16 +10,16 @@
 class Level;
 
 struct TransformComponentInstance {
-    unsigned int index;
+    unsigned index;
 
-    TransformComponentInstance(unsigned int index){
+    TransformComponentInstance(unsigned index){
         this->index = index;
     }
 };
 
 struct TransformComponentData {
-    unsigned int usedInstances;
-    unsigned int allocatedInstances;
+    unsigned usedInstances;
+    unsigned allocatedInstances;
     void *instanceBuffer;
 
     Actor* actor;
@@ -31,24 +31,23 @@ struct TransformComponentData {
 class TransformComponentSystem {
 public:
     TransformComponentSystem();
-    void Allocate(unsigned int size);
+    void Allocate(unsigned size);
 
     void Initialize(Actor actor, Vector3 position, Vector3 scale, Vector4 rotation);
 
-    TransformComponentInstance MakeInstance(unsigned int index);
+    TransformComponentInstance MakeInstance(unsigned index);
     TransformComponentInstance GetInstanceForActor(Actor actor);
     bool HasComponentForActor(Actor actor);
-    void DestroyInstance(unsigned int index);
+    void DestroyInstance(unsigned index);
 
     void ApplyTransform(Actor actor);
 
-    // TODO remove this later...
     void Update();
 
     Level* level;
 private:
     TransformComponentData data;
-    std::map<unsigned int, unsigned int> map;
+    std::map<unsigned, unsigned> map;
 };
 
 #endif
