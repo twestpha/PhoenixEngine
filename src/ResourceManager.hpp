@@ -1,12 +1,12 @@
+#ifndef RESOURCE_MANAGER_H
+#define RESOURCE_MANAGER_H
+
 #include <map>
 #include <vector>
 #include <thread>
 
 #include "Resource.hpp"
 #include "Model.hpp"
-
-#ifndef RESOURCE_MANAGER_H
-#define RESOURCE_MANAGER_H
 
 class ResourceManager {
 public:

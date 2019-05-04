@@ -1,9 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Level.hpp"
 #include "Actor.hpp"
 #include "Renderer.hpp"
+#include "TransformComponentSystem.hpp"
+#include "ModelComponentSystem.hpp"
+#include "ResourceManager.hpp"
 
 // Forward declarations
 class Level;
@@ -32,8 +34,7 @@ private:
     ActorManager actorManager;
     GameState currentGameState;
 
-protected:
-    List<Level> levels;
+    TransformComponentSystem transformComponentSystem;
 };
 
 #endif

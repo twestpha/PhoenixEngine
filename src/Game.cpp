@@ -2,18 +2,33 @@
 
 #include "Game.hpp"
 #include "Time.hpp"
-#include "Level.hpp"
 #include "Renderer.hpp"
 
 Game::Game(){
     currentGameState = Running;
     renderer = new Renderer();
 
-    Level* testLevel = new Level();
-    testLevel->game = this;
-    testLevel->Initialize();
-    levels.Add(*testLevel);
+    Actor testActor = CreateActor();
 
+    transformComponentSystem.SetGame(this);
+    transformComponentSystem.Initialize();
+
+    // transformComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
+    // modelComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
+    // materialComponentSystem.Allocate(COMPONENT_MAXIMUM_PER_LEVEL);
+
+    // transformComponentSystem.level = this;
+    // modelComponentSystem.level = this;
+
+    // Test model
+    Model* model = new Model();
+    ResourceManager::Instance()->loadModelFromFile("highpoly.phx", model);
+
+    ResourceManager::Instance()->Join(); // Close all loading threads running
+
+    // transformComponentSystem.Initialize(testActor, Vector3(0.0f, 0.0f, -6.0f), Vector3(1.0f, 1.0f, 1.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f));
+    // materialComponentSystem.Initialize(testActor);
+    // modelComponentSystem.Initialize(testActor, *model);
 }
 
 void Game::Start(){
@@ -26,9 +41,7 @@ void Game::Run(){
     while(currentGameState != Exiting){
         currentGameState = WaitingForDraw;
 
-        for(int i(0); i < levels.Used(); ++i){
-            levels[i].Update();
-        }
+
 
         Time::UpdatelastFrameTime();
 

@@ -3,51 +3,30 @@
 
 #include <map>
 
+#include "ComponentSystem.hpp"
 #include "Math3D.hpp"
 #include "Actor.hpp"
 
-// Forward declarations
-class Level;
-
-struct TransformComponentInstance {
-    unsigned index;
-
-    TransformComponentInstance(unsigned index){
-        this->index = index;
-    }
-};
+#define MAX_TRANSFORM_COMPONENTS 16
 
 struct TransformComponentData {
-    unsigned usedInstances;
-    unsigned allocatedInstances;
-    void *instanceBuffer;
-
-    Actor* actor;
-    Vector3* position;
-    Vector3* scale;
-    Vector4* rotation;
+    Vector3 position;
+    Vector4 orientation;
+    Vector3 scale;
 };
 
-class TransformComponentSystem {
+class TransformComponentSystem : public ComponentSystem {
+private:
+    TransformComponentData components[MAX_TRANSFORM_COMPONENTS];
+
 public:
     TransformComponentSystem();
-    void Allocate(unsigned size);
 
-    void Initialize(Actor actor, Vector3 position, Vector3 scale, Vector4 rotation);
-
-    TransformComponentInstance MakeInstance(unsigned index);
-    TransformComponentInstance GetInstanceForActor(Actor actor);
-    bool HasComponentForActor(Actor actor);
-    void DestroyInstance(unsigned index);
-
-    void ApplyTransform(Actor actor);
-
+    ComponentReference AddComponent(void* data);
+    void Initialize();
     void Update();
 
-    Level* level;
-private:
-    TransformComponentData data;
-    std::map<unsigned, unsigned> map;
+    // void ApplyTransform(Actor actor);
 };
 
 #endif

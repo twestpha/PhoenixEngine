@@ -17,19 +17,19 @@ void Renderer::Draw(Game* game){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glPushMatrix();
-        for(int i(0); i < game->levels.Used(); ++i){
-            Level& level = game->levels[i];
-            int modelCount = level.ModelCount();
-
-            for(int j(0); j < modelCount; ++j){
-                Actor actor = level.modelComponentSystem.GetActorForIndex(j);
-                glPushMatrix();
-                    level.transformComponentSystem.ApplyTransform(actor);
-                    level.modelComponentSystem.Draw(actor);
-                glPopMatrix();
-            }
-            // printf("Size: %d, level: %p\n", sizeof(game->levels[i]), (Level*) &game->levels[i]);
-        }
+        // for(int i(0); i < game->levels.Used(); ++i){
+        //     Level& level = game->levels[i];
+        //     int modelCount = level.ModelCount();
+        //
+        //     for(int j(0); j < modelCount; ++j){
+        //         // Actor actor = level.modelComponentSystem.GetActorForIndex(j);
+        //         glPushMatrix();
+        //             // level.transformComponentSystem.ApplyTransform(actor);
+        //             // level.modelComponentSystem.Draw(actor);
+        //         glPopMatrix();
+        //     }
+        //     // printf("Size: %d, level: %p\n", sizeof(game->levels[i]), (Level*) &game->levels[i]);
+        // }
     glPopMatrix();
     glFlush();
     drawTime = Time::TimeElapsed(drawTime);

@@ -11,7 +11,6 @@
 #include "ShaderProgram.hpp"
 
 // Forward declarations
-class Level;
 
 struct MaterialComponentInstance {
     unsigned int index;
@@ -48,7 +47,6 @@ public:
 
     void ApplyMaterial(Actor actor);
 
-    Level* level;
 private:
     MaterialComponentData data;
     std::map<unsigned int, unsigned int> map;

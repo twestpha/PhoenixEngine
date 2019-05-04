@@ -12,8 +12,6 @@
 // TODO Also implement VBO's (Vertex Buffer Objects) because that serialization fast
 
 // Forward declarations
-class Level;
-
 struct ModelComponentInstance {
     unsigned int index;
 
@@ -48,10 +46,10 @@ public:
     int UsedInstances();
     Actor GetActorForIndex(int index);
 
-    Level* level;
+
 private:
     ModelComponentData data;
     std::map<unsigned int, unsigned int> map;
 };
 
-#endif
+#endif // MODEL_COMPONENT_SYSTEM_H

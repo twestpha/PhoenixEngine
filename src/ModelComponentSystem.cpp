@@ -5,7 +5,6 @@
 #include "ModelComponentSystem.hpp"
 #include "Assert.hpp"
 #include "Allocator.hpp"
-#include "Level.hpp"
 
 ModelComponentSystem::ModelComponentSystem(){
     data.usedInstances = 0;
@@ -43,8 +42,8 @@ void ModelComponentSystem::Initialize(Actor actor, Model model){
     data.model[instance.index] = model;
 
     // Requirements
-    Assert_(level->transformComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have transform component.", actor.String());
-    Assert_(level->materialComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have material component.", actor.String());
+    // Assert_(level->transformComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have transform component.", actor.String());
+    // Assert_(level->materialComponentSystem.HasComponentForActor(actor), "Actor '%s' does not have material component.", actor.String());
 
     map[actor.id] = instance.index;
 }
@@ -106,7 +105,7 @@ void ModelComponentSystem::Draw(Actor actor){
     Vertex* vertices = model.GetData();
     int vertexCount = model.vertexCount;
 
-    level->materialComponentSystem.ApplyMaterial(actor);
+    // level->materialComponentSystem.ApplyMaterial(actor);
 
     glBegin(GL_TRIANGLES);
         for(int i(0); i < vertexCount; ++i){

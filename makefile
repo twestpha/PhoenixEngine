@@ -26,4 +26,4 @@ debug:
 	$(CC) -static $(CFLAGS) -g -o $@ $^$(LFLAGS)
 
 clean:
-	del $(OBJDIR)\*.o
+	del $(OBJDIR)\*
